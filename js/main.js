@@ -1,5 +1,7 @@
 /**
+ * @depend game/sobject.js
  * @depend game/engine.js
+ * @depend game/submarine.js
  */
 
 // Avoid `console` errors in browsers that lack a console.
