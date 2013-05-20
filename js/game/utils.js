@@ -9,6 +9,19 @@ Utils = new (function(){
         var dy = p1.y - p2.y;
         return dx * dx + dy * dy;
     }
+    this.getPosition = function(event) {
+        var position = {x: null, y: null};
+        if (Modernizr.touch) { //global variable detecting touch support
+            if (event.touches && event.touches.length > 0) {
+                position.x = event.touches[0].pageX - (Engine.view.x || 0);
+                position.y = event.touches[0].pageY - (Engine.view.y || 0);
+            }
+        }else{
+            position.x = event.pageX - (Engine.view.x || 0);
+            position.y = event.pageY - (Engine.view.y || 0);
+        }
+        return position;
+    }
 });
 
 var traceDiv = $('<div style="position: absolute; width: 400px;"></div>');

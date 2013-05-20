@@ -8,6 +8,7 @@
 EngineClass = function(){
     this.sobjects = [];
     this.stage = new PIXI.Stage(0xF0F0FF, true);
+    this.view = null;
     this.keydownX = 0;
     this.keydownY = 0;
     this.clickPoint = null;
@@ -40,6 +41,7 @@ EngineClass = function(){
     this.initialize = function(renderer){
         this.width = renderer.width;
         this.height = renderer.height;
+        this.view = renderer.view;
         var self = this;
         var keyChangeFunc = function(keyCode, down){
             var changed = false;
@@ -80,29 +82,16 @@ EngineClass = function(){
             if(keyChangeFunc(event.keyCode, false))
                 event.preventDefault();
         });
-        var clickDownFunc = function(data){
-            var seen = []
-            var t = JSON.stringify(data, function(key, val) {
-                if (typeof val == "object") {
-                    if (seen.indexOf(val) >= 0)
-                        return
-                    seen.push(val)
-                }
-                return val
-            })
-            trace(t);
-
-            self.clickPoint = self.stage.getMousePosition();
+        var clickDownFunc = function(event){
+            event.preventDefault();
+            self.clickPoint = Utils.getPosition(event.originalEvent ? event.originalEvent : event);
         }
-        var clickUpFunc = function(data){
+        var clickUpFunc = function(event){
+            event.preventDefault();
             self.clickPoint = null;
         }
-        $(renderer.view).mousedown(clickDownFunc);
-        document.addEventListener("touchstart", clickDownFunc, true);
-        renderer.view.touchstart = clickDownFunc;
-        $(renderer.view).mouseup(clickUpFunc);
-        document.addEventListener("touchend", clickUpFunc, true);
-        renderer.view.touchend = clickUpFunc;
+        $(renderer.view).on(Modernizr.touch ? "touchstart" : "mousedown", clickDownFunc);
+        $(renderer.view).on(Modernizr.touch ? "touchend" : "mouseup", clickUpFunc);
     }
 };
 Engine = new EngineClass();
