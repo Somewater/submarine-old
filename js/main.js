@@ -1,34 +1,14 @@
 /**
- * @depend game/sobject.js
- * @depend game/engine.js
- * @depend game/submarine.js
+ * @depend plugins.js
  */
 
-// Avoid `console` errors in browsers that lack a console.
-(function() {
-    var method;
-    var noop = function () {};
-    var methods = [
-        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
-        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
-        'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
-        'timeStamp', 'trace', 'warn'
-    ];
-    var length = methods.length;
-    var console = (window.console = window.console || {});
-
-    while (length--) {
-        method = methods[length];
-
-        // Only stub undefined methods.
-        if (!console[method]) {
-            console[method] = noop;
-        }
-    }
-}());
-
-// Place any jQuery/helper plugins in here.
-// ...
+/**
+ * # CORE
+ * @depend game/engine.js
+ *
+ * @depend game/submarine.js
+ * @depend game/shark.js
+ */
 
 // You can use either PIXI.WebGLRenderer or PIXI.CanvasRenderer
 var renderer = PIXI.autoDetectRenderer(800, 600);
@@ -54,3 +34,10 @@ var submarine = new Submarine();
 submarine.setX(renderer.width / 2);
 submarine.setY(renderer.height / 2);
 Engine.addSObject(submarine);
+
+for (var i = 0; i < 10; i++) {
+    var shark = new Shark();
+    shark.setX(renderer.width * Math.random());
+    shark.setY(renderer.height * Math.random());
+    Engine.addSObject(shark);
+}

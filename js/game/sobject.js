@@ -9,8 +9,10 @@ function SObject() {
     this.speedX = 0;
     this.speedY = 0;
     this.speed = 0;
+    this.acceleration = 0.5;
     this.getX = function(){ return this.x; }
     this.getY = function(){ return this.y; }
+    this.getPosition = function(){ return new PIXI.Point(this.x, this.y); }
     this.setX = function(x){
         if(this.view) this.view.position.x = x;
         this.x = x

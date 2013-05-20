@@ -1,15 +1,18 @@
-Const = new (function(){
-    this.basePath = "/"; // "http://example.com"
-    this.imagePath = this.basePath + "img/";
-    this.coordTreshold = 0.1;
-    this.frictionCoef = 0.9;
-});
+/**
+ * @depend game/const.js
+ * @depend game/sobject.js
+ * @depend game/targetable.js
+ * @depend game/utils.js
+ */
+
 EngineClass = function(){
     this.sobjects = [];
     this.stage = new PIXI.Stage(0xF0F0FF, true);
     this.keydownX = 0;
     this.keydownY = 0;
     this.clickPoint = null;
+    this.width = 0;
+    this.height = 0;
     // functions
     this.tick = function(){
         var sobjectsClone = this.sobjects.slice();
@@ -35,6 +38,8 @@ EngineClass = function(){
             sobj.onRemoved();
     };
     this.initialize = function(renderer){
+        this.width = renderer.width;
+        this.height = renderer.height;
         var self = this;
         var keyChangeFunc = function(keyCode, down){
             var changed = false;
