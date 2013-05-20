@@ -17,6 +17,7 @@ function Submarine(){
             this.updateSpeed(0, 0);
         this.updatePosition();
     };
+    Submarine.instance = this;
 }
 
 Targetable(Submarine);

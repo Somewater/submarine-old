@@ -42,6 +42,11 @@ EngineClass = function(){
         this.view = renderer.view;
         this.input.initialize();
     }
+    this.heroPosition = function(){
+        if(Submarine.instance)
+            return Submarine.instance.getPosition();
+        throw new Error("Hero not instatiated");
+    }
 };
 Engine = new EngineClass();
 

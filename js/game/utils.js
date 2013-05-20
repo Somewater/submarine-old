@@ -10,6 +10,7 @@ Utils = new (function(){
         return dx * dx + dy * dy;
     }
     this.getPosition = function(event) {
+        event = event.originalEvent ? event.originalEvent : event;
         var position = {x: null, y: null};
         if (Modernizr.touch) { //global variable detecting touch support
             if (event.touches && event.touches.length > 0) {

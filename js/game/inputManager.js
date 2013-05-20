@@ -3,6 +3,11 @@ Engine.input = new function(){
     this.keydownY = 0;
     this.clickPoint = null;
 
+    this.startMovingHeroPos = null;
+    this.startMovingPoint = null;
+    this.moving = false;
+    this.gestureActive = false;
+
     this.initialize = function(){
         var self = this;
         $(document).keydown(function(event){
@@ -14,15 +19,34 @@ Engine.input = new function(){
                 event.preventDefault();
         });
         var clickDownFunc = function(event){
+            self.moving = true;
+            self.gestureActive = false;
             event.preventDefault();
-            self.clickPoint = Utils.getPosition(event.originalEvent ? event.originalEvent : event);
+            self.clickPoint = Utils.getPosition(event);
+            self.startMovingHeroPos = Engine.heroPosition();
+            self.startMovingPoint = Utils.getPosition(event);
         }
         var clickUpFunc = function(event){
             event.preventDefault();
             self.clickPoint = null;
+            self.startMovingPoint = null;
+            self.moving = false;
+        }
+        var moveFunc = function(event){
+            if(self.moving){
+                var pos = Utils.getPosition(event);
+                var dx = pos.x - self.startMovingPoint.x;
+                var dy = pos.y - self.startMovingPoint.y;
+                if(self.gestureActive || (dx * dx + dy * dy) > Const.gestureZoneSqr){
+                    self.clickPoint.x = self.startMovingHeroPos.x + dx;
+                    self.clickPoint.y = self.startMovingHeroPos.y + dy;
+                    self.gestureActive = true;
+                }
+            }
         }
         $(renderer.view).on(Modernizr.touch ? "touchstart" : "mousedown", clickDownFunc);
         $(renderer.view).on(Modernizr.touch ? "touchend" : "mouseup", clickUpFunc);
+        $(renderer.view).on(Modernizr.touch ? "touchmove " : "mousemove", moveFunc);
     };
     this.onKeyChange = function(keyCode, down){
         var changed = false;
