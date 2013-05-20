@@ -1,3 +1,7 @@
+/**
+ * @depend game/engine.js
+ */
+
 // You can use either PIXI.WebGLRenderer or PIXI.CanvasRenderer
 var renderer = PIXI.autoDetectRenderer(800, 600);
 document.body.appendChild(renderer.view);
