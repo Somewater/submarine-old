@@ -81,6 +81,17 @@ EngineClass = function(){
                 event.preventDefault();
         });
         var clickDownFunc = function(data){
+            var seen = []
+            var t = JSON.stringify(data, function(key, val) {
+                if (typeof val == "object") {
+                    if (seen.indexOf(val) >= 0)
+                        return
+                    seen.push(val)
+                }
+                return val
+            })
+            trace(t);
+
             self.clickPoint = self.stage.getMousePosition();
         }
         var clickUpFunc = function(data){
