@@ -38,8 +38,9 @@ Engine.input = new function(){
                 var dx = pos.x - self.startMovingPoint.x;
                 var dy = pos.y - self.startMovingPoint.y;
                 if(self.gestureActive || (dx * dx + dy * dy) > Const.gestureZoneSqr){
-                    self.clickPoint.x = self.startMovingHeroPos.x + dx;
-                    self.clickPoint.y = self.startMovingHeroPos.y + dy;
+                    var heroPos = Engine.heroPosition();
+                    self.clickPoint.x = heroPos.x + dx;
+                    self.clickPoint.y = heroPos.y + dy;
                     self.gestureActive = true;
                 }
             }

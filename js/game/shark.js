@@ -16,6 +16,11 @@ function Shark(){
 
         if(Utils.distance(this.targetPoint, this.getPosition()) < this.speed)
             this.targetPoint = null;
+        else{
+            var dx = this.targetPoint.x - this.x;
+            if(dx != 0)
+                this.flipView(dx < 0);
+        }
     };
 }
 Targetable(Shark);

@@ -8,14 +8,23 @@ function Submarine(){
     this.speed = 15.0;
     this.acceleration = 1.0;
     this.tick = function(){
-        if(Engine.input.clickPoint)
-            this.gotoCoords(Engine.input.clickPoint.x, Engine.input.clickPoint.y);
-        else if(Engine.input.keydownX != 0 || Engine.input.keydownY != 0){
+        var px = NaN, py = NaN;
+        if(Engine.input.clickPoint){
+            px = Engine.input.clickPoint.x;
+            py = Engine.input.clickPoint.y;
+            this.gotoCoords(px, py);
+        }else if(Engine.input.keydownX != 0 || Engine.input.keydownY != 0){
             var DIST = 100;
-            this.gotoCoords(this.x + Engine.input.keydownX * DIST, this.y + Engine.input.keydownY * DIST);
+            px = this.x + Engine.input.keydownX * DIST;
+            py = this.y + Engine.input.keydownY * DIST;
+            this.gotoCoords(px, py);
         }else
             this.updateSpeed(0, 0);
         this.updatePosition();
+
+        if(!isNaN(px) && Math.abs(px - this.x) > 2) {
+            this.flipView(px < this.x);
+        }
     };
     Submarine.instance = this;
 }

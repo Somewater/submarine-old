@@ -36,4 +36,9 @@ function Targetable(clazz){
             this.speedY *= speedRatio;
         }
     };
+    clazz.prototype.flipView = function(orig){
+        if(this.view) {
+            this.view.scale.x = (orig ? 1 : -1);
+        }
+    }
 }
