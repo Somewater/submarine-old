@@ -3,7 +3,7 @@ require 'juicer'
 ROOT = File.dirname( File.expand_path( __FILE__ ) ) unless defined? ROOT
 
 desc "Compile"
-task :default => :prod do
+task :default => :dev do
 end
 
 desc "Compile production"
