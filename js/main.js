@@ -41,3 +41,5 @@ for (var i = 0; i < 10; i++) {
     shark.setY(renderer.height * Math.random());
     Engine.addSObject(shark);
 }
+
+Engine.sound.play('sea_theme', -1);

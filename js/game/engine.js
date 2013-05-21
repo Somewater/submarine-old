@@ -12,6 +12,7 @@ EngineClass = function(){
     this.width = 0;
     this.height = 0;
     this.input = null;//  InputManager
+    this.sound = null;// SoundManager
     // functions
     this.tick = function(){
         var sobjectsClone = this.sobjects.slice();
@@ -41,6 +42,7 @@ EngineClass = function(){
         this.height = renderer.height;
         this.view = renderer.view;
         this.input.initialize();
+        this.sound.initialize();
     }
     this.heroPosition = function(){
         if(Submarine.instance)
@@ -52,4 +54,5 @@ Engine = new EngineClass();
 
 /**
  * @depend game/inputManager.js
+ * @depend game/soundManager.js
  */

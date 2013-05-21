@@ -1,4 +1,5 @@
 .idea/*
 *.iml
 pixi.js-master/*
+soundmanager/*
 js/*.min.js
