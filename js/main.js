@@ -18,6 +18,7 @@ function animate() {
     Engine.tick();
     renderer.render(Engine.stage);
     requestAnimFrame(animate);
+    updateGui();
 }
 //setInterval(function(){
 //    Engine.tick();
@@ -43,3 +44,19 @@ for (var i = 0; i < 10; i++) {
 }
 
 Engine.sound.play('sea_theme', -1);
+
+var healthTablo = new PIXI.Text("", {font:"12px Arial", fill:"green"});
+healthTablo.position.x = Engine.width - 100;
+healthTablo.position.y = 5;
+Engine.stage.addChild(healthTablo);
+
+function updateGui(){
+    // update gui
+    if(submarine.health <= 0)
+        healthTablo.setText('Submarine dead');
+    else{
+        healthTablo.setText('health ' + Math.round(submarine.health) + '%');
+        if(submarine.health < 40)
+            healthTablo.setStyle({font: "12px Arial", fill: 'red'})
+    }
+}

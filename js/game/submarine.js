@@ -43,7 +43,7 @@ function Submarine(){
             var obj = inters[i];
             if(obj instanceof Shark){
                 if(!this.isAttacking(obj.id)){
-                    this.changeHealth(-1);
+                    this.changeHealth(-5);
                     attackingNow.push(obj.id)
                 }
             }
@@ -53,13 +53,11 @@ function Submarine(){
     }
     this.changeHealth = function(delta){
         this.health += delta;
-        trace('Health = ' + this.health);
         if(delta < 0){
             Engine.sound.play('hit');
         }
         if(this.health <= 0){
             Engine.toggle(false);
-            trace('Submarine is dead');
         }
     }
     this.isAttacking = function(sobjId){
