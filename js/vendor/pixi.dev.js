@@ -891,6 +891,7 @@ PIXI.Text.prototype.setStyle = function(style)
     style.font = style.font || "bold 20pt Arial";
     style.fill = style.fill || "black";
     style.align = style.align || "left";
+    style.stroke = style.stroke || "#000000";
     style.strokeThickness = style.strokeThickness || 0;
     this.style = style;
     this.dirty = true;
