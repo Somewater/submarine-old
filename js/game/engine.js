@@ -14,8 +14,10 @@ EngineClass = function(){
     this.input = null;//  InputManager
     this.sound = null;// SoundManager
     this.ticker = null;// Ticker
+    this.running = true;
     // functions
     this.tick = function(){
+        if(!this.running) return;
         var sobjectsClone = this.sobjects.slice();
         for (var i = 0; i < sobjectsClone.length; i++) {
             var sobj = sobjectsClone[i];
@@ -62,6 +64,10 @@ EngineClass = function(){
                 result.push(so);
         }
         return result;
+    }
+    this.toggle = function(on){
+        if(on === undefined) on = true;
+        this.running = on;
     }
 };
 Engine = new EngineClass();

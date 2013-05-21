@@ -7,6 +7,9 @@ function Submarine(){
     this.image = "submarine.png";
     this.speed = 15.0;
     this.acceleration = 1.0;
+    this.health = 100;
+    this.attacking = [];// кто атаковал в прошлом тике (и 2+ тика подряд не учитывается)
+    
     this.tick = function(){
         var px = NaN, py = NaN;
         if(Engine.input.clickPoint){
@@ -28,13 +31,42 @@ function Submarine(){
     };
     Submarine.instance = this;
     this.onAdded = function(){
-        Engine.ticker.add(this.checkCollision, 300, this);
+        Engine.ticker.add(this.checkCollision, 100, this);
     }
     this.onRemoved = function(){
         Engine.ticker.remove(this.checkCollision);
     }
     this.checkCollision = function(dt){
-        console.log("COLLISION CHECK dt=" + dt)
+        var inters = Engine.intersectSObjects(this);
+        var attackingNow = [];
+        for (var i = 0; i < inters.length; i++) {
+            var obj = inters[i];
+            if(obj instanceof Shark){
+                if(!this.isAttacking(obj.id)){
+                    this.changeHealth(-1);
+                    attackingNow.push(obj.id)
+                }
+            }
+        }
+        this.attacking.push(attackingNow);
+        if(this.attacking.length > Const.attackTicks) this.attacking.shift();
+    }
+    this.changeHealth = function(delta){
+        this.health += delta;
+        trace('Health = ' + this.health);
+        if(delta < 0){
+            Engine.sound.play('hit');
+        }
+        if(this.health <= 0){
+            Engine.toggle(false);
+            trace('Submarine is dead');
+        }
+    }
+    this.isAttacking = function(sobjId){
+        for (var i = 0; i < this.attacking.length; i++)
+            if(this.attacking[i].indexOf(sobjId) != -1)
+                return true;
+        return false;
     }
 }
 

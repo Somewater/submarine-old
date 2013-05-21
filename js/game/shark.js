@@ -5,7 +5,7 @@
 function Shark(){
     SObject.apply(this);
     this.image = "shark.png";
-    this.speed = 2.0;
+    this.speed = .5;
     this.targetPoint = null;
     this.tick = function(){
         if(!this.targetPoint){
@@ -14,7 +14,7 @@ function Shark(){
         this.gotoCoords(this.targetPoint.x, this.targetPoint.y);
         this.updatePosition();
 
-        if(Utils.distance(this.targetPoint, this.getPosition()) < this.speed)
+        if(Utils.distance(this.targetPoint, this.getPosition()) < Math.max(1,this.speed))
             this.targetPoint = null;
         else{
             var dx = this.targetPoint.x - this.x;

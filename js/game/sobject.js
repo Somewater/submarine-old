@@ -1,4 +1,6 @@
+SObject.idCounter = 1;
 function SObject() {
+    this.id = SObject.idCounter++;
     this.image = null;
     this.view = null;
     this.onAdded = null;
@@ -39,8 +41,8 @@ function SObject() {
         if(!this._rect){
             this._rect = new PIXI.Rectangle(this.x,
                                             this.y,
-                                            this.view ? this.view.width : 0,
-                                            this.view ? this.view.height : 0);
+                                            this.view ? Math.abs(this.view.width) : 0,
+                                            this.view ? Math.abs(this.view.height) : 0);
         }else{
             this._rect.x = this.x;
             this._rect.y = this.y;

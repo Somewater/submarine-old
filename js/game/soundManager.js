@@ -30,10 +30,11 @@ Engine.sound = new function(){
             return false;
         }
         count = count || 1;
-        soundManager.createSound({
-            id: soundId,
-            url: Const.soundPath + soundId + '.ogg'
-        });
+        if(!soundManager.getSoundById(soundId, true))
+            soundManager.createSound({
+                id: soundId,
+                url: Const.soundPath + soundId + '.ogg'
+            });
         var opts = {};
         if(count != 1) opts.loops = (count < 0 ? 0xFFFF : count)
         soundManager.play(soundId, opts)
