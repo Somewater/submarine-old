@@ -1,5 +1,6 @@
 Engine.sound = new function(){
     this.soundManager2Ready = false;
+    this.usingAudioFormat = 'ogg';
     this.deferredSounds = [];
     
     this.initialize = function(){
@@ -16,6 +17,8 @@ Engine.sound = new function(){
     };
     this.onSoundManager2Ready = function(){
         this.soundManager2Ready = true;
+        if(!soundManager.html5['ogg'])
+            usingAudioFormat = 'mp3';
         while (this.deferredSounds.length) {
             var c = this.deferredSounds.shift();
             if(c[0] == 'play')
@@ -33,7 +36,7 @@ Engine.sound = new function(){
         if(!soundManager.getSoundById(soundId, true))
             soundManager.createSound({
                 id: soundId,
-                url: Const.soundPath + soundId + '.ogg'
+                url: Const.soundPath + soundId + '.' + this.usingAudioFormat
             });
         var opts = {};
         if(count != 1) opts.loops = (count < 0 ? 0xFFFF : count)
