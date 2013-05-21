@@ -2,6 +2,7 @@
  * @depend game/core/const.js
  * @depend game/core/sobject.js
  * @depend game/core/targetable.js
+ * @depend game/core/boundable.js
  * @depend game/core/utils.js
  */
 

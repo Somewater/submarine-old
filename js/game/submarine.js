@@ -4,6 +4,7 @@
 
 function Submarine(){
     SObject.apply(this);
+    Boundable(this)
     this.image = "submarine.png";
     this.speed = 15.0;
     this.acceleration = 1.0;
