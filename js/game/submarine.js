@@ -8,6 +8,7 @@ function Submarine(){
     this.speed = 15.0;
     this.acceleration = 1.0;
     this.health = 100;
+    this.score = 0;
     this.attacking = [];// кто атаковал в прошлом тике (и 2+ тика подряд не учитывается)
     
     this.tick = function(){
@@ -31,7 +32,7 @@ function Submarine(){
     };
     Submarine.instance = this;
     this.onAdded = function(){
-        Engine.ticker.add(this.checkCollision, 100, this);
+        Engine.ticker.add(this.checkCollision, 50, this);
     }
     this.onRemoved = function(){
         Engine.ticker.remove(this.checkCollision);
@@ -46,6 +47,9 @@ function Submarine(){
                     this.changeHealth(-5);
                     attackingNow.push(obj.id)
                 }
+            }else if(obj instanceof ScoreItem) {
+                this.changeScore(1);
+                Engine.removeSObject(obj);
             }
         }
         this.attacking.push(attackingNow);
@@ -54,11 +58,16 @@ function Submarine(){
     this.changeHealth = function(delta){
         this.health += delta;
         if(delta < 0){
-            Engine.sound.play('hit');
+            Engine.sound.play('growl');
         }
         if(this.health <= 0){
             Engine.toggle(false);
         }
+    }
+    this.changeScore = function(delta){
+        this.score += delta;
+        if(delta > 0)
+            Engine.sound.play('collect');
     }
     this.isAttacking = function(sobjId){
         for (var i = 0; i < this.attacking.length; i++)
