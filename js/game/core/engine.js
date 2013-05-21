@@ -1,8 +1,8 @@
 /**
- * @depend game/const.js
- * @depend game/sobject.js
- * @depend game/targetable.js
- * @depend game/utils.js
+ * @depend game/core/const.js
+ * @depend game/core/sobject.js
+ * @depend game/core/targetable.js
+ * @depend game/core/utils.js
  */
 
 EngineClass = function(){
@@ -73,7 +73,7 @@ EngineClass = function(){
 Engine = new EngineClass();
 
 /**
- * @depend game/inputManager.js
- * @depend game/soundManager.js
- * @depend game/ticker.js
+ * @depend game/core/inputManager.js
+ * @depend game/core/soundManager.js
+ * @depend game/core/ticker.js
  */

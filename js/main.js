@@ -4,7 +4,7 @@
 
 /**
  * # CORE
- * @depend game/engine.js
+ * @depend game/core/engine.js
  *
  * @depend game/submarine.js
  * @depend game/shark.js
