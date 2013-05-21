@@ -18,7 +18,7 @@ Engine.sound = new function(){
     this.onSoundManager2Ready = function(){
         this.soundManager2Ready = true;
         if(!soundManager.html5['ogg'])
-            usingAudioFormat = 'mp3';
+            this.usingAudioFormat = 'mp3';
         while (this.deferredSounds.length) {
             var c = this.deferredSounds.shift();
             if(c[0] == 'play')
