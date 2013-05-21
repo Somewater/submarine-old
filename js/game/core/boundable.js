@@ -1,7 +1,7 @@
 // при выходе за границы карты, объект "отталкивается" от стен
 
 function Boundable(instanse){
-    instanse.bound = -50;// inner bounds if positive
+    instanse.bound = -5;// inner bounds if positive
     instanse.boundFrictionCoeff = 0.9;
     var superUpdatePosition = instanse.updatePosition
     instanse.updatePosition = function(){

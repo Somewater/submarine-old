@@ -47,7 +47,7 @@ function SObject() {
             this._rect.x = this.x;
             this._rect.y = this.y;
             this._rect.width = this.view ? Math.abs(this.view.width) : 0; 
-            this._rect.height = this.view ? Math.abs(this.view.width) : 0;
+            this._rect.height = this.view ? Math.abs(this.view.height) : 0;
         }
         this._rect.x -= this._rect.width * 0.5;
         this._rect.y -= this._rect.height * 0.5;
