@@ -10,6 +10,8 @@ function SObject() {
     this.speedY = 0;
     this.speed = 0;
     this.acceleration = 0.5;
+    this._rect = null;
+    
     this.getX = function(){ return this.x; }
     this.getY = function(){ return this.y; }
     this.getPosition = function(){ return new PIXI.Point(this.x, this.y); }
@@ -26,9 +28,23 @@ function SObject() {
         this.setY(this.getY() + this.speedY);
     };
     this.setView = function(view){
+        this._rect = null;
         this.view = view;
         this.view.position.x = this.x;
         this.view.position.y = this.y;
     }
-    this.getView = function(){return this.view; }
+    this.getView = function(){return this.view }
+    
+    this.getRect = function(){
+        if(!this._rect){
+            this._rect = new PIXI.Rectangle(this.x,
+                                            this.y,
+                                            this.view ? this.view.width : 0,
+                                            this.view ? this.view.height : 0);
+        }else{
+            this._rect.x = this.x;
+            this._rect.y = this.y;
+        }
+        return this._rect;
+    }
 }

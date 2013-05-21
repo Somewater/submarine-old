@@ -8,6 +8,7 @@ Engine.sound = new function(){
             url: '/swf/',
             preferFlash: false,
             flashVersion: 9,
+            debugMode: false,
             onready: function() {
                 self.onSoundManager2Ready();
             }

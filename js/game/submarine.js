@@ -27,6 +27,15 @@ function Submarine(){
         }
     };
     Submarine.instance = this;
+    this.onAdded = function(){
+        Engine.ticker.add(this.checkCollision, 300, this);
+    }
+    this.onRemoved = function(){
+        Engine.ticker.remove(this.checkCollision);
+    }
+    this.checkCollision = function(dt){
+        console.log("COLLISION CHECK dt=" + dt)
+    }
 }
 
 Targetable(Submarine);

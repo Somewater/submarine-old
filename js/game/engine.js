@@ -13,6 +13,7 @@ EngineClass = function(){
     this.height = 0;
     this.input = null;//  InputManager
     this.sound = null;// SoundManager
+    this.ticker = null;// Ticker
     // functions
     this.tick = function(){
         var sobjectsClone = this.sobjects.slice();
@@ -21,6 +22,7 @@ EngineClass = function(){
             if(sobj.tick)
                 sobj.tick();
         }
+        this.ticker.tick();
     };
     this.addSObject = function(sobj){
         var texture = new PIXI.Texture.fromImage(Const.imagePath + sobj.image);
@@ -43,11 +45,23 @@ EngineClass = function(){
         this.view = renderer.view;
         this.input.initialize();
         this.sound.initialize();
+        this.ticker.initialize();
     }
     this.heroPosition = function(){
         if(Submarine.instance)
             return Submarine.instance.getPosition();
         throw new Error("Hero not instatiated");
+    }
+    this.intersectSObjects = function(sobject){
+        var result = [];
+        var sobjectRect = sobject.getRect();
+        var l = this.sobjects.length;
+        for(var i = 0; i < l; i++){
+            var so = this.sobjects[i];
+            if(so != sobject && Utils.intersectsRect(sobjectRect, so.getRect()))
+                result.push(so);
+        }
+        return result;
     }
 };
 Engine = new EngineClass();
@@ -55,4 +69,5 @@ Engine = new EngineClass();
 /**
  * @depend game/inputManager.js
  * @depend game/soundManager.js
+ * @depend game/ticker.js
  */

@@ -23,6 +23,20 @@ Utils = new (function(){
         }
         return position;
     }
+    this.intersectsRect = function(rect1, rect2){
+        var x1 = rect1.x;
+        var y1 = rect1.y;
+        var w1 = rect1.width;
+        var h1 = rect1.height;
+        var x2 = rect2.x;
+        var y2 = rect2.y;
+        var w2 = rect2.width;
+        var h2 = rect2.height;
+        if(w1 <= 0 || h1 <= 0 || w2 <= 0 || h2 <= 0) {
+            return false;
+        }
+        return !!(x1 <= x2 + w2 && x2 <= x1 + w1 && y1 <= y2 + h2 && y2 <= y1 + h1);        
+    } 
 });
 
 var traceDiv = $('<div style="position: absolute; width: 400px;"></div>');
