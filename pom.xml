@@ -34,6 +34,10 @@
 				<groupId>ro.isdc.wro4j</groupId>
 				<artifactId>wro4j-maven-plugin</artifactId>
 				<version>${wro4j.version}</version>
+				<configuration>
+					<ignoreMissingResources>false</ignoreMissingResources>				
+					<contextFolder>${basedir}/public/</contextFolder>
+				</configuration>
 			</plugin>
     </plugins>
   </build>
