@@ -1,0 +1,40 @@
+<project>
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.hellespontus.submarine</groupId>
+  <artifactId>submarine</artifactId>
+  <version>0.1</version>
+  <name>Submarine JS game</name>
+  
+	<project>
+		<properties>
+		  <wro4j.version>1.6.3</wro4j.version> 
+		</properties> 
+	</project>  
+  
+  <dependencies>
+		<dependency>
+			<groupId>ro.isdc.wro4j</groupId>
+			<artifactId>wro4j-core</artifactId>
+			<version>${wro4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ro.isdc.wro4j</groupId>
+			<artifactId>wro4j-extensions</artifactId>
+			<version>${wro4j.version}</version>
+		</dependency>		
+	</dependencies>
+
+  <build>
+    <outputDirectory>public/js</outputDirectory>
+    <testOutputDirectory>public/test-js</testOutputDirectory>
+
+    <plugins>
+			<plugin>
+				<groupId>ro.isdc.wro4j</groupId>
+				<artifactId>wro4j-maven-plugin</artifactId>
+				<version>${wro4j.version}</version>
+			</plugin>
+    </plugins>
+  </build>
+</project>

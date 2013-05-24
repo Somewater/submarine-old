@@ -3,3 +3,5 @@
 pixi.js-master/*
 soundmanager/*
 js/*.min.js
+*~
+target/*
