@@ -6,48 +6,48 @@
   <version>0.1</version>
   <name>Submarine JS game</name>
   
-	<project>
-		<properties>
-		  <wro4j.version>1.6.3</wro4j.version> 
-		</properties> 
-	</project>  
+    <project>
+        <properties>
+          <wro4j.version>1.6.3</wro4j.version> 
+        </properties> 
+    </project>  
 
-	<dependencies>
-		<dependency>
-			<groupId>ro.isdc.wro4j</groupId>
-			<artifactId>wro4j-core</artifactId>
-			<version>${wro4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>ro.isdc.wro4j</groupId>
-			<artifactId>wro4j-extensions</artifactId>
-			<version>${wro4j.version}</version>
-		</dependency>		
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>ro.isdc.wro4j</groupId>
+            <artifactId>wro4j-core</artifactId>
+            <version>${wro4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ro.isdc.wro4j</groupId>
+            <artifactId>wro4j-extensions</artifactId>
+            <version>${wro4j.version}</version>
+        </dependency>
+    </dependencies>
 
   <build>
     <outputDirectory>public/js</outputDirectory>
     <testOutputDirectory>public/test-js</testOutputDirectory>
 
     <plugins>
-			<plugin>
-				<groupId>ro.isdc.wro4j</groupId>
-				<artifactId>wro4j-maven-plugin</artifactId>
-				<version>${wro4j.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<contextFolder>${basedir}/public/</contextFolder>
-					<jsDestinationFolder>${basedir}/public/js/</jsDestinationFolder>
+            <plugin>
+                <groupId>ro.isdc.wro4j</groupId>
+                <artifactId>wro4j-maven-plugin</artifactId>
+                <version>${wro4j.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <contextFolder>${basedir}/public/</contextFolder>
+                    <jsDestinationFolder>${basedir}/public/js/</jsDestinationFolder>
                     <cssDestinationFolder>${basedir}/public/css/</cssDestinationFolder>
-					<wroManagerFactory>ro.isdc.wro.extensions.manager.standalone.GoogleStandaloneManagerFactory</wroManagerFactory>
-				</configuration>
-			</plugin>
+                    <wroManagerFactory>ro.isdc.wro.extensions.manager.standalone.GoogleStandaloneManagerFactory</wroManagerFactory>
+                </configuration>
+            </plugin>
     </plugins>
   </build>
 </project>
