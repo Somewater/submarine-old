@@ -1,0 +1,78 @@
+#sandbox, #sandbox pre.output, #sandbox pre.output span, #sandbox textarea, #sandbox textarea:focus {
+    border: 0 none;
+    box-shadow: none;
+    font-family: "Consolas","Andale Mono","Courier New","Courier",monospace;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.3;
+    outline: 0 none;
+}
+#sandbox {
+    background: none repeat scroll 0 0 #333333;
+    border-radius: 10px 10px 10px 10px;
+    color: #CCCCCC;
+    margin: 0px auto;
+    width: 600px;
+    height: 300px;
+    padding: 20px 20px 15px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+#sandbox pre.output {
+    border: 0 none;
+    display: block;
+    height: 285px;
+    margin: 0 0 10px;
+    overflow-y: auto;
+    padding: 0;
+    position: relative;
+    white-space: pre;
+    width: 100%;
+}
+#sandbox pre.output span {
+    color: #F7F7F7;
+}
+#sandbox pre.output span.command {
+    color: #CCCCCC;
+}
+#sandbox pre.output span.prefix {
+    color: #777777;
+}
+#sandbox pre.output span.undefined {
+    color: #777777;
+}
+#sandbox pre.output span.string {
+    color: #9999FF;
+}
+#sandbox pre.output span.number {
+    color: #77FF77;
+}
+#sandbox pre.output span.error {
+    color: #FF7777;
+}
+#sandbox .input {
+    padding: 0 0 0 15px;
+    position: relative;
+}
+#sandbox .input:before {
+    color: #DDDDDD;
+    content: ">";
+    left: 0;
+    position: absolute;
+    top: 1px;
+}
+#sandbox textarea {
+    background: none repeat scroll 0 0 #333333;
+    border: 0 none;
+    color: #F7F7F7;
+    margin: 0;
+    outline: 0 none;
+    overflow: hidden;
+    padding: 0;
+    resize: none;
+    width: 100%;
+}
+#sandbox textarea:focus {
+    outline: 0 none;
+}

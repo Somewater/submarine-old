@@ -7,10 +7,15 @@ Engine.input = new function(){
     this.startMovingPoint = null;
     this.moving = false;
     this.gestureActive = false;
+    this.listenedKeys = {};
 
     this.initialize = function(){
         var self = this;
         $(document).keydown(function(event){
+            var listened = self.listenedKeys[event.keyCode];
+            if(listened)
+                for (var i = 0; i < listened.length; i++)
+                    listened[i]();
             if(self.onKeyChange(event.keyCode, true))
                 event.preventDefault();
         });
@@ -49,22 +54,37 @@ Engine.input = new function(){
         $(renderer.view).on(Modernizr.touch ? "touchend" : "mouseup", clickUpFunc);
         $(renderer.view).on(Modernizr.touch ? "touchmove " : "mousemove", moveFunc);
     };
+    this.bind = function(keyCode, callback){
+        if(!this.listenedKeys[keyCode])
+            this.listenedKeys[keyCode] = []
+        this.listenedKeys[keyCode].push(callback);
+    }
+    this.unbind = function(keyCode, callback){
+        if(this.listenedKeys[keyCode]){
+            var idx = this.listenedKeys[keyCode].indexOf(callback);
+            if(idx != -1){
+                this.listenedKeys[keyCode].splice(idx, 1);
+                if(this.listenedKeys[keyCode].length == 0)
+                    delete this.listenedKeys[keyCode];
+            }
+        }
+    }
     this.onKeyChange = function(keyCode, down){
-        var changed = false;
+        var preventDefault = false;
         var dx = 0;
         var dy = 0;
         if(keyCode == 37 || keyCode == 65){// LEFT (A)
             dx = -1;
-            changed = true;
+            preventDefault = keyCode == 37;
         }else if(keyCode == 38 || keyCode == 87){// UP (W)
             dy = -1;
-            changed = true;
+            preventDefault = keyCode == 38;
         }else if(keyCode == 39 || keyCode == 68){// RIGHT (D)
             dx = 1;
-            changed = true;
+            preventDefault = keyCode == 39;
         }else if(keyCode == 40 || keyCode == 83){// DOWN (S)
             dy = 1;
-            changed = true;
+            preventDefault = keyCode == 40;
         }
         if(dx){
             if(down)
@@ -78,6 +98,6 @@ Engine.input = new function(){
             else if(this.keydownY == dy)
                 this.keydownY = 0;
         }
-        return changed;
+        return preventDefault;
     }
 };

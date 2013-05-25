@@ -39,16 +39,16 @@ Utils = new (function(){
     } 
 });
 
-var traceDiv = $('<div style="position: absolute; width: 400px;"></div>');
-var traceDivSwitcher = $('<div style="position: absolute; width: 20px; height: 20px; background: blue;"></div>');
-$('body').append(traceDiv);
-$('body').append(traceDivSwitcher);
-$(traceDiv).on('selectstart dragstart', function(evt){ evt.preventDefault(); return false; });
-$(traceDivSwitcher).click(function(){
-    $(traceDiv).toggle();
+Engine.input.bind(192, function(){
+    if(typeof AppConsole === 'undefined'){
+        var script = document.createElement('script');
+        script.src = '/js/console/inject.js';
+        script.type = 'text/javascript';
+        document.body.appendChild(script)
+    } else {
+        AppConsole.toggle();
+    }
 });
 function trace(msg){
-    traceDiv.html(traceDiv.html() + (new Date().toLocaleTimeString()) + "> " + msg.toString() + "<br>");
+    console.debug(msg);
 }
-trace("Console started");
-$(traceDiv).toggle();
