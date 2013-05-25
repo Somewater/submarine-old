@@ -11,8 +11,8 @@
 		  <wro4j.version>1.6.3</wro4j.version> 
 		</properties> 
 	</project>  
-  
-  <dependencies>
+
+	<dependencies>
 		<dependency>
 			<groupId>ro.isdc.wro4j</groupId>
 			<artifactId>wro4j-core</artifactId>
@@ -34,9 +34,18 @@
 				<groupId>ro.isdc.wro4j</groupId>
 				<artifactId>wro4j-maven-plugin</artifactId>
 				<version>${wro4j.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
-					<ignoreMissingResources>false</ignoreMissingResources>				
 					<contextFolder>${basedir}/public/</contextFolder>
+					<jsDestinationFolder>${basedir}/public/js/</jsDestinationFolder>
+                    <cssDestinationFolder>${basedir}/public/css/</cssDestinationFolder>
+					<wroManagerFactory>ro.isdc.wro.extensions.manager.standalone.GoogleStandaloneManagerFactory</wroManagerFactory>
 				</configuration>
 			</plugin>
     </plugins>

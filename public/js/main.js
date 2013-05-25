@@ -74,8 +74,8 @@ function updateGui(){
     }
     scoreTablo.setText('score\t' + digitize(submarine.score, 4));
 }
-function digitize(int, len){
-    var result = int.toString();
+function digitize(integer, len){
+    var result = integer.toString();
     while(result.length < len)
         result = '0' + result;
     return result;

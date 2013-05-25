@@ -2,9 +2,27 @@
 <groups xmlns="http://www.isdc.ro/wro"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.isdc.ro/wro wro.xsd">
+    
+    <group name="application">
+        <js>/js/plugins.js</js>
+        <js>/js/game/core/const.js</js>
+        <js>/js/game/core/sobject.js</js>
+        <js>/js/game/core/targetable.js</js>
+        <js>/js/game/core/boundable.js</js>
+        <js>/js/game/core/engine.js</js>
+        <js>/js/game/core/inputManager.js</js>
+        <js>/js/game/core/soundManager.js</js>
+        <js>/js/game/core/ticker.js</js>
+        <js>/js/game/core/utils.js</js>
 
-  <group name="application">
-    <js>/js/main.js</js>
-  </group>
+        <js>/js/game/scoreItem.js</js>
+        <js>/js/game/submarine.js</js>
+        <js>/js/game/shark.js</js>
+        <js>/js/main.js</js>        
+    </group>
+
+    <group name="vendor">
+        <js>/js/vendor/*.js</js>
+    </group>
 
 </groups>
