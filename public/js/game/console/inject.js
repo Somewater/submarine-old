@@ -46,7 +46,7 @@ AppConsole = new function(){
         $('#sandbox-output').append('<span class="' + style + '">' + msg + '</span>' + (newline ? '<br>' : ''));
     }
     this.error = function(msg){this.print(msg, 'error', true);}
-    this.log = function(msg){this.print(msg, undefined, true);}
+    this.log = function(msg){this.print(new Date().toLocaleTimeString() + '> ' + msg, undefined, true);}
     this.stdin = function(command){
         this.print(command, 'string', true);
         var args = command.split(/\s+/);

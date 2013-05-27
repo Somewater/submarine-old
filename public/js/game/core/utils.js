@@ -42,7 +42,7 @@ Utils = new (function(){
 Engine.input.bind(192, function(){
     if(typeof AppConsole === 'undefined'){
         var script = document.createElement('script');
-        script.src = '/js/console/inject.js';
+        script.src = '/js/game/console/inject.js';
         script.type = 'text/javascript';
         document.body.appendChild(script)
     } else {
@@ -51,4 +51,6 @@ Engine.input.bind(192, function(){
 });
 function trace(msg){
     console.debug(msg);
+    if(typeof AppConsole != 'undefined')
+        AppConsole.log(msg)
 }

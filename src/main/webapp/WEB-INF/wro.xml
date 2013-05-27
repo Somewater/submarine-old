@@ -13,8 +13,12 @@
         <js>/js/game/core/inputManager.js</js>
         <js>/js/game/core/soundManager.js</js>
         <js>/js/game/core/ticker.js</js>
+        <js>/js/game/core/serverManager.js</js>
+        <js>/js/game/core/socketio-server.js</js>
         <js>/js/game/core/utils.js</js>
 
+        <js>/js/game/commands/*.js</js>
+        
         <js>/js/game/scoreItem.js</js>
         <js>/js/game/submarine.js</js>
         <js>/js/game/shark.js</js>

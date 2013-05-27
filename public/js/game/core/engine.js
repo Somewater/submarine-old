@@ -16,6 +16,7 @@ EngineClass = function(){
     this.sound = null;// SoundManager
     this.ticker = null;// Ticker
     this.running = true;
+    this.server = null;
     // functions
     this.tick = function(){
         if(!this.running) return;
@@ -49,6 +50,7 @@ EngineClass = function(){
         this.input.initialize();
         this.sound.initialize();
         this.ticker.initialize();
+        this.server.initialize();
     }
     this.heroPosition = function(){
         if(Submarine.instance)

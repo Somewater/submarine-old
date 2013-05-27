@@ -80,3 +80,7 @@ function digitize(integer, len){
         result = '0' + result;
     return result;
 }
+
+$(Engine.view).on("mousedown", function(){
+    new PingCommand().execute();
+})
