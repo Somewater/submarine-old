@@ -3,16 +3,9 @@ function AddRoomUserCommand(roomId){
     this.roomId = roomId
     this.data = true;
     this.execute = function(){
-        var user = this.data.user;
-        var users = Model.room.users;
-        var alreadyAdded = false;
-        for(var i in users)
-            if(users[i].uid == user.uid){
-                alreadyAdded = true;
-                break;
-            }
-        if(!alreadyAdded){
-            Model.room.users.push(user);
+        var user = new GameUser(this.data.user);
+        if(!Model.room.containsUser(user)){
+            Model.room.addUser(user);
             Model.dispatch(Events.ROOM_USERS_CHANGE, user)
             Model.dispatch(Events.ROOM_USER_ADD, user)
             trace("User uid=" + user.uid + " added to room #" + Model.room.roomId);

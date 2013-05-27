@@ -2,15 +2,14 @@
  * @depend engine.js
  */
 
-function Submarine(){
+function Submarine(gameUser){
     SObject.apply(this);
     Boundable(this)
     this.image = "submarine.png";
     this.speed = 15.0;
     this.acceleration = 1.0;
-    this.health = 100;
-    this.score = 0;
     this.attacking = [];// кто атаковал в прошлом тике (и 2+ тика подряд не учитывается)
+    this.gameUser = gameUser
     
     this.tick = function(){
         var px = NaN, py = NaN;
@@ -57,13 +56,13 @@ function Submarine(){
         if(this.attacking.length > Const.attackTicks) this.attacking.shift();
     }
     this.changeHealth = function(delta){
-        this.health += delta;
+        this.gameUser.addHealth(delta);
         if(delta < 0){
             Engine.sound.play('growl');
         }
     }
     this.changeScore = function(delta){
-        this.score += delta;
+        this.gameUser.addScore(delta);
         if(delta > 0)
             Engine.sound.play('collect');
     }

@@ -16,7 +16,7 @@ GuiController = new (function(){
         Engine.stage.addChild(scoreTablo);
         this.scoreTablo = scoreTablo;
 
-        this.usersTablo = new PIXI.Text("", {font:"12px Arial", fill:"black"});
+        this.usersTablo = new PIXI.Text("", {font:"12px monospace", fill:"black"});
         this.usersTablo.position.x = 5;
         this.usersTablo.position.y = 5;
         Engine.stage.addChild(this.usersTablo);
@@ -28,20 +28,22 @@ GuiController = new (function(){
         
     }
     this.tick = function(){
-        if(Model.hero.health <= 0)
+        if(Model.user.health <= 0)
             this.healthTablo.setText('Submarine dead');
         else{
-            this.healthTablo.setText('health\t' + Math.round(Model.hero.health) + '%');
-            if(Model.hero.health < 40)
+            this.healthTablo.setText('health\t' + Math.round(Model.user.health) + '%');
+            if(Model.user.health < 40)
                 this.healthTablo.setStyle({font: "12px Arial", fill: 'red'})
         }
-        this.scoreTablo.setText('score\t' + Utils.digitize(Model.hero.score, 4));
+        this.scoreTablo.setText('score\t' + Utils.digitize(Model.user.score, 4));
 
-        var usersText = 'Users: '
+        var usersText = sprintf('%-5s %-5s %-5s %-5s', 'uid', 'me', 'score', 'health')
         if(Model.room)
             for(var i in Model.room.users){
                 var user = Model.room.users[i];
-                var line = user.uid + '\t' + (user.uid == Model.user.uid ? '*' : '');
+                var line = sprintf('%-5s %-5s %-5s %-5s', 
+                    user.uid, (user.uid == Model.user.uid ? '*' : '-'), user.score, user.health) 
+                    //user.uid + '\t' + (user.uid == Model.user.uid ? '*\t' : '') + user.score + '\t' + user.health;
                 usersText += "\n" + line;
             }
         this.usersTablo.setText(usersText);

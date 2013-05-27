@@ -20,6 +20,8 @@
 
         <js>/js/game/model/events.js</js>
         <js>/js/game/model/model.js</js>
+        <js>/js/game/model/gameUser.js</js>
+        <js>/js/game/model/room.js</js>
         
         <js>/js/game/commands/*.js</js>
         

@@ -20,7 +20,7 @@ GameController = new (function(){
         Engine.server.send(new ConfigRequestCommand());
     };
     this.startGame = function(){
-        var submarine = new Submarine();
+        var submarine = new Submarine(Model.user);
         submarine.setX(renderer.width / 2);
         submarine.setY(renderer.height / 2);
         Engine.addSObject(submarine);

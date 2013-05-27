@@ -3,7 +3,7 @@ function ConnectToRoomCommand(roomId){
     this.roomId = roomId
     this.data = true;
     this.execute = function(){
-        Model.room = this.data.room;
+        Model.room = new Room(this.data.room);
         Model.dispatch(Events.ROOM_READY)
         Model.dispatch(Events.ROOM_USERS_CHANGE)
         trace("Room ready");

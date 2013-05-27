@@ -8,6 +8,9 @@ import java.util.Map;
 
 public class GameUser implements IJsonable{
     public int uid;
+    public int score = 0;
+    public int health = 100;
+    
     private static int uidCounter = 0;
     private SocketIOClient client;
     private Room room;
@@ -34,6 +37,8 @@ public class GameUser implements IJsonable{
     public Map<String, Object> toData() {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("uid", this.uid);
+        result.put("score", this.score);
+        result.put("health", this.health);
         return result;
     }
 
