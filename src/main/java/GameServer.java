@@ -1,8 +1,14 @@
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOServer;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.InterruptedException;
 import java.lang.String;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import com.corundumstudio.socketio.listener.*;
 import com.corundumstudio.socketio.*;
@@ -13,10 +19,34 @@ import com.hellsepontus.commands.PongCommand;
 
 public class GameServer {
     
+    private static Logger logger = Logger.getLogger(GameServer.class.getName());
+    public static Properties properties;
+    public static String ROOT;
+    
     public static void main(String[] args) throws InterruptedException{
-        int port = 4000;
+        properties = new Properties();
+        try{
+            properties.load(new FileInputStream("config/server.properties"));
+        }catch (IOException e){
+            System.err.println("Could not read properties file: " + e.toString());
+            System.exit(1);
+        }
+        
+        ROOT = properties.getProperty("root", System.getProperty("user.dir"));
+
+        int port = Integer.parseInt(properties.getProperty("port"));
         if(args.length > 0)
             port = Integer.parseInt(args[0]);
+        
+        if(properties.getProperty("logger").equals("file")){
+            try {
+                LogManager.getLogManager().readConfiguration(
+                        new FileInputStream(ROOT + "/config/logging.properties")
+                );
+            } catch (IOException e) {
+                System.err.println("Could not setup logger configuration: " + e.toString());
+            }
+        }
         
         Configuration config = new Configuration();
         config.setHostname("localhost");
@@ -31,7 +61,8 @@ public class GameServer {
                 Class<? extends Command> clazz = Command.get(data.id);
                 try {
                     Command command = clazz.newInstance();
-
+                    if(logger.isLoggable(Level.INFO))
+                        logger.info("Command '" + command.id + "' received: " + command.toString());
                     command.execute();
                 }catch (Exception ex){
                     ex.printStackTrace();
@@ -40,7 +71,7 @@ public class GameServer {
         });
 
         server.start();
-        System.out.println("GameServer started on port " + port);
+        logger.severe("GameServer started on " + server.getConfiguration().getHostname() + ":" + server.getConfiguration().getPort());
 
         Thread.sleep(Integer.MAX_VALUE);
 

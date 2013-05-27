@@ -4,11 +4,15 @@ import com.corundumstudio.socketio.SocketIOServer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Command {
     public static final String EVENT_NAME = "cmd";
     public static SocketIOServer server; 
     protected static Map<String, Class<? extends Command>> commands = new HashMap<String, Class<? extends Command>>();
+    
+    protected static Logger logger = Logger.getLogger(Command.class.getName());
     
     public String id;
     
@@ -37,5 +41,7 @@ public class Command {
         data.id = this.id;
         data.data = this.toData();
         server.getBroadcastOperations().sendEvent(EVENT_NAME, data);
+        if(logger.isLoggable(Level.INFO))
+            logger.info("Command '" + this.id + "' sended: " + this.toString());
     }
 }
