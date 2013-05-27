@@ -75,10 +75,14 @@ function Command(id){
     this.execute = function(){}
     this.toData = function(){
         var data = JSON.parse(JSON.stringify(this));
+        var excludedFields = Command.EXCLUDED_FIELDS;
+        for (var i = 0; i < excludedFields.length; i++)
+            delete data[excludedFields[i]]
         return data;
     }
 }
 Command.registegred = {}
+Command.EXCLUDED_FIELDS = ['data', 'id']
 Command.add = function(id, commandClazz){
     Command.registegred[id] = commandClazz;
 }

@@ -2,7 +2,7 @@ function UserDataRequestCommand(){
     Command.call(this, UserDataRequestCommand.ID);
     this.data = true;
     this.execute = function(){
-        Model.user = this.data;
+        Model.user = this.data.user;
         Model.dispatch(Events.USERDATA_READY)
         trace("Model.user assigned");
     }

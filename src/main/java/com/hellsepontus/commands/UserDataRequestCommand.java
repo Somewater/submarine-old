@@ -1,5 +1,8 @@
 package com.hellsepontus.commands;
 
+import com.hellsepontus.model.GameUser;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,8 +15,7 @@ public class UserDataRequestCommand extends Command{
 
     @Override
     public void execute() {
-        Map<String, String> userData = new HashMap<String, String>();
-        send(ID, userData);
-        client.disconnect();
+        GameUser user = getUser();
+        send(ID, Collections.singletonMap("user", (Object)user));
     }
 }

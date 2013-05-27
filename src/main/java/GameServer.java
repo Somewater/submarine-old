@@ -14,6 +14,7 @@ import com.corundumstudio.socketio.listener.*;
 import com.corundumstudio.socketio.*;
 import com.hellsepontus.commands.*;
 import com.hellsepontus.model.Model;
+import com.hellsepontus.model.Room;
 
 public class GameServer {
     
@@ -63,7 +64,7 @@ public class GameServer {
         server.addEventListener(Command.EVENT_NAME, CommandData.class, new DataListener<CommandData>() {
             public void onData(SocketIOClient client, CommandData data, AckRequest ackRequest){
                 try {
-                    Command command = Command.createCommand(data.id, client, ackRequest, model);
+                    Command command = Command.createCommand(data.id, data.data, client, ackRequest, model);
                     if(logger.isLoggable(Level.INFO))
                         logger.info("Command '" + command.id + "' received: " + command.toString());
                     command.execute();
@@ -75,6 +76,9 @@ public class GameServer {
         server.addDisconnectListener(new DisconnectListener() {
             public void onDisconnect(SocketIOClient client) {
                 logger.fine("Client #" + client.getSessionId() + " disconnected");
+                Room room = model.findRoomByClient(client);
+                if(room != null)
+                    new RemoveRoomUserCommand(room.findUserByClient(client)).execute();
             }
         });
         
@@ -96,5 +100,7 @@ public class GameServer {
         Command.add(RoomListRequestCommand.ID, RoomListRequestCommand.class);
         Command.add(ConnectToRoomCommand.ID, ConnectToRoomCommand.class);
         Command.add(DisconnectFromRoomCommand.ID, DisconnectFromRoomCommand.class);
+        Command.add(RemoveRoomUserCommand.ID, RemoveRoomUserCommand.class);
+        Command.add(AddRoomUserCommand.ID, AddRoomUserCommand.class);
     }
 }
