@@ -1,5 +1,6 @@
 Engine.server = new function(){
     this.core = null;
+    this.coreInited = false;
     this.started = false;
     this.connected = false;
     this.commandQueue = [];
@@ -13,10 +14,18 @@ Engine.server = new function(){
         if(!this.started){
             this.started = true;
             this.connected = false;
-            this.core.initialize(this);
+            if(!this.coreInited)
+                this.core.initialize(this);
+            this.core.start();
         }
     }
-    
+    this.stop = function(){
+        if(this.started){
+            this.started = false;
+            this.connected = false;
+            this.core.stop()
+        }
+    }
     this.onConnect = function(){
         trace('Client has connected to the server');
         var c = this.connected;
@@ -37,8 +46,13 @@ Engine.server = new function(){
 
         if(this.connected)
             this.core.send(command);
-        else
+        else{
             this.commandQueue.push(command);
+            if(!this.started){// мог стартовать ранее
+                this.stop();
+                this.start();
+            }
+        }
     }
     
     this.handle = function(command){

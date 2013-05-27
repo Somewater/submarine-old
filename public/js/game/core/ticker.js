@@ -5,7 +5,7 @@ Engine.ticker = new function(){
     
     this.initialize = function(){
     }
-    this.tick = function(){
+    this.globalTick = function(){
         var tickTime = new Date().getTime();
         var dt = this.lastTickTime ? tickTime - this.lastTickTime : 0;
         var tickersClone = this.tickers.slice();

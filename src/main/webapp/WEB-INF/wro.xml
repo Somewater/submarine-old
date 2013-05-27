@@ -9,6 +9,7 @@
         <js>/js/game/core/sobject.js</js>
         <js>/js/game/core/targetable.js</js>
         <js>/js/game/core/boundable.js</js>
+        <js>/js/game/core/bindable.js</js>
         <js>/js/game/core/engine.js</js>
         <js>/js/game/core/inputManager.js</js>
         <js>/js/game/core/soundManager.js</js>
@@ -17,11 +18,16 @@
         <js>/js/game/core/socketio-server.js</js>
         <js>/js/game/core/utils.js</js>
 
+        <js>/js/game/model/events.js</js>
+        <js>/js/game/model/model.js</js>
+        
         <js>/js/game/commands/*.js</js>
         
         <js>/js/game/scoreItem.js</js>
         <js>/js/game/submarine.js</js>
         <js>/js/game/shark.js</js>
+        <js>/js/game/gameController.js</js>
+        <js>/js/game/guiController.js</js>
         <js>/js/main.js</js>        
     </group>
 

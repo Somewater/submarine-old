@@ -37,16 +37,11 @@ Utils = new (function(){
         }
         return !!(x1 <= x2 + w2 && x2 <= x1 + w1 && y1 <= y2 + h2 && y2 <= y1 + h1);        
     } 
-});
-
-Engine.input.bind(192, function(){
-    if(typeof AppConsole === 'undefined'){
-        var script = document.createElement('script');
-        script.src = '/js/game/console/inject.js';
-        script.type = 'text/javascript';
-        document.body.appendChild(script)
-    } else {
-        AppConsole.toggle();
+    this.digitize = function(integer, len){
+        var result = integer.toString();
+        while(result.length < len)
+            result = '0' + result;
+        return result;
     }
 });
 function trace(msg){

@@ -26,7 +26,6 @@ EngineClass = function(){
             if(sobj.tick)
                 sobj.tick();
         }
-        this.ticker.tick();
     };
     this.addSObject = function(sobj){
         var texture = new PIXI.Texture.fromImage(Const.imagePath + sobj.image);

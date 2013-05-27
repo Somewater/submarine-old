@@ -61,9 +61,6 @@ function Submarine(){
         if(delta < 0){
             Engine.sound.play('growl');
         }
-        if(this.health <= 0){
-            Engine.toggle(false);
-        }
     }
     this.changeScore = function(delta){
         this.score += delta;

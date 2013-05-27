@@ -9,6 +9,6 @@ public class PingCommand extends Command{
 
     @Override
     public void execute() {
-        new PongCommand().execute();
+        send(new PongCommand());
     }
 }

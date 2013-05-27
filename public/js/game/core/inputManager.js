@@ -7,15 +7,13 @@ Engine.input = new function(){
     this.startMovingPoint = null;
     this.moving = false;
     this.gestureActive = false;
-    this.listenedKeys = {};
+    
+    Bindable(this);
 
     this.initialize = function(){
         var self = this;
         $(document).keydown(function(event){
-            var listened = self.listenedKeys[event.keyCode];
-            if(listened)
-                for (var i = 0; i < listened.length; i++)
-                    listened[i]();
+            self.dispatch(event.keyCode);
             if(self.onKeyChange(event.keyCode, true))
                 event.preventDefault();
         });
@@ -54,21 +52,6 @@ Engine.input = new function(){
         $(renderer.view).on(Modernizr.touch ? "touchend" : "mouseup", clickUpFunc);
         $(renderer.view).on(Modernizr.touch ? "touchmove " : "mousemove", moveFunc);
     };
-    this.bind = function(keyCode, callback){
-        if(!this.listenedKeys[keyCode])
-            this.listenedKeys[keyCode] = []
-        this.listenedKeys[keyCode].push(callback);
-    }
-    this.unbind = function(keyCode, callback){
-        if(this.listenedKeys[keyCode]){
-            var idx = this.listenedKeys[keyCode].indexOf(callback);
-            if(idx != -1){
-                this.listenedKeys[keyCode].splice(idx, 1);
-                if(this.listenedKeys[keyCode].length == 0)
-                    delete this.listenedKeys[keyCode];
-            }
-        }
-    }
     this.onKeyChange = function(keyCode, down){
         var preventDefault = false;
         var dx = 0;
