@@ -10,4 +10,6 @@ Const = new (function(){
     this.gestureZoneSqr = 100 * 100;
     this.attackTicks = 5;// сколько тиков длится одна атака (мин. расстояние между атаками)
     this.defaultSoundMute = false
+    this.offsetX = 0
+    this.offsetY = 0    
 });

@@ -14,6 +14,12 @@
 // You can use either PIXI.WebGLRenderer or PIXI.CanvasRenderer
 var renderer = PIXI.autoDetectRenderer(Const.width, Const.height);
 document.body.appendChild(renderer.view);
+$(function(){
+    $(renderer.view).positionCenter();
+    var pos = $(Engine.view).position()
+    Const.offsetX = pos.left
+    Const.offsetY = pos.top
+});
 requestAnimFrame(animate);
 function animate() {
     Engine.ticker.globalTick();

@@ -14,12 +14,12 @@ Utils = new (function(){
         var position = {x: null, y: null};
         if (Modernizr.touch) { //global variable detecting touch support
             if (event.touches && event.touches.length > 0) {
-                position.x = event.touches[0].pageX - (Engine.view.x || 0);
-                position.y = event.touches[0].pageY - (Engine.view.y || 0);
+                position.x = event.touches[0].pageX - Const.offsetX;
+                position.y = event.touches[0].pageY - Const.offsetY;
             }
         }else{
-            position.x = event.pageX - (Engine.view.x || 0);
-            position.y = event.pageY - (Engine.view.y || 0);
+            position.x = event.pageX - Const.offsetX;
+            position.y = event.pageY - Const.offsetY;
         }
         return position;
     }
