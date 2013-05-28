@@ -1,4 +1,5 @@
 SObject.idCounter = 1;
+SObject.INITIAL_COORD = -1
 function SObject() {
     this.id = (Model.isOwner() ? SObject.idCounter++ : undefined);
     this.image = null;
@@ -6,8 +7,8 @@ function SObject() {
     this.onAdded = null;
     this.onRemoved = null;
     this.tick = null;
-    this.x = 0;
-    this.y = 0;
+    this.x = SObject.INITIAL_COORD;
+    this.y = SObject.INITIAL_COORD;
     this.speedX = 0;
     this.speedY = 0;
     this.speed = 0;

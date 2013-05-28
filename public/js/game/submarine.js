@@ -7,6 +7,7 @@ function Submarine(gameUser){
     Boundable(this)
     TargetPoint(this);
     GameUserAssoc(this);
+    SmoothMover(this);
     this.image = function(){ return this.gameUser && this.gameUser.itsMe() ? "submarine-my.png" : "submarine.png" };
     this.speed = 15.0;
     this.acceleration = 1.0;
