@@ -27,6 +27,7 @@
         <js>/js/game/model/gameUserAssoc.js</js>
         
         <js>/js/game/commands/*.js</js>
+        <js>/js/game/commands/logic/*.js</js>
         
         <js>/js/game/scoreItem.js</js>
         <js>/js/game/submarine.js</js>
