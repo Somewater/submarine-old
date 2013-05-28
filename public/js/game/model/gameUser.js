@@ -26,6 +26,9 @@ function GameUser(uid){
     this.itsMe = function(){
         return Model.user.uid == this.uid
     }
+    this.isDead = function(){
+        return this.health <= 0
+    }
     this.toData = function(){
         return {uid: this.uid, 
                 health: this.health, 

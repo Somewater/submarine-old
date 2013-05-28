@@ -15,6 +15,12 @@ function Submarine(gameUser){
     this.gameUser = gameUser
     
     this.tick = function(){
+        if(this.gameUser.isDead()){
+            this.speedX = 0;
+            this.speedY = 0.1;
+            this.updatePosition()
+            return;
+        }
         var px = NaN, py = NaN;
         if(this.gameUser.itsMe()){
             if(Engine.input.clickPoint && !Utils.pointsEquals(Engine.input.clickPoint, this.targetPoint)){
