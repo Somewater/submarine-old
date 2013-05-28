@@ -28,7 +28,7 @@ EngineClass = function(){
         }
     };
     this.addSObject = function(sobj){
-        var texture = new PIXI.Texture.fromImage(Const.imagePath + sobj.image);
+        var texture = new PIXI.Texture.fromImage(Const.imagePath + (typeof sobj.image == 'function' ? sobj.image() : sobj.image));
         sobj.setView(new PIXI.Sprite(texture));
         sobj.getView().anchor.x = sobj.getView().anchor.y = 0.5;
         this.sobjects.push(sobj);

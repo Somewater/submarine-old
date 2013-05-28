@@ -7,7 +7,7 @@ function Submarine(gameUser){
     Boundable(this)
     TargetPoint(this);
     GameUserAssoc(this);
-    this.image = "submarine.png";
+    this.image = function(){ return this.gameUser && this.gameUser.itsMe() ? "submarine-my.png" : "submarine.png" };
     this.speed = 15.0;
     this.acceleration = 1.0;
     this.attacking = [];// кто атаковал в прошлом тике (и 2+ тика подряд не учитывается)
