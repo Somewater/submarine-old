@@ -29,7 +29,7 @@ function SmoothMover(instance){
         var fixAbs = (fix > 0 ? fix : -fix);
         
         if(/*fixAbs < instance.speed * 5 &&*/ fixAbs > 1){
-            var fixPart = fix * 0.5
+            var fixPart = fix * 0.2
             instance['fix' + name] = fix - fixPart;
             return actial - fix + fixPart;
         }else{
