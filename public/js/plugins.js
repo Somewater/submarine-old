@@ -43,8 +43,8 @@ $(document).ready(function() {
                     $this.css({
                         position: 'absolute',
                         margin: '0',
-                        top: elTop,
-                        left: (($(window).width() - $this.outerWidth()) / 2) + 'px'
+                        top: Math.max(0, elTop),
+                        left: Math.max(0, ($(window).width() - $this.outerWidth()) / 2) + 'px'
                     });
                 }
             });
