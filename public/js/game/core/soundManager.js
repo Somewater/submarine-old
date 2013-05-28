@@ -2,6 +2,7 @@ Engine.sound = new function(){
     this.soundManager2Ready = false;
     this.usingAudioFormat = 'ogg';
     this.deferredSounds = [];
+    this.mute = Const.defaultSoundMute
     
     this.initialize = function(){
         var self = this;
@@ -28,6 +29,8 @@ Engine.sound = new function(){
         }
     }
     this.play = function(soundId, count){
+        if(this.mute) 
+            return
         if(!this.soundManager2Ready){
             this.deferredSounds.push(['play', arguments]);
             return false;

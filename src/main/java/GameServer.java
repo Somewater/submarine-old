@@ -13,6 +13,9 @@ import java.util.logging.Logger;
 import com.corundumstudio.socketio.listener.*;
 import com.corundumstudio.socketio.*;
 import com.hellsepontus.commands.*;
+import com.hellsepontus.commands.logic.ChangePropCommand;
+import com.hellsepontus.commands.logic.MoveCommand;
+import com.hellsepontus.commands.logic.SyncAllCommand;
 import com.hellsepontus.model.Model;
 import com.hellsepontus.model.Room;
 
@@ -49,7 +52,7 @@ public class GameServer {
         }
         
         Configuration config = new Configuration();
-        config.setHostname("localhost");
+        config.setHostname("0.0.0.0");
         config.setPort(port);
         
         configurateCommands();
@@ -102,5 +105,11 @@ public class GameServer {
         Command.add(DisconnectFromRoomCommand.ID, DisconnectFromRoomCommand.class);
         Command.add(RemoveRoomUserCommand.ID, RemoveRoomUserCommand.class);
         Command.add(AddRoomUserCommand.ID, AddRoomUserCommand.class);
+        Command.add(SyncAllCommand.ID, SyncAllCommand.class);
+        Command.add(SyncAllCommand.SyncAllApplyCommand.ID, SyncAllCommand.SyncAllApplyCommand.class);
+        Command.add(MoveCommand.ID, MoveCommand.class);
+        Command.add(MoveCommand.MoveApplyCommand.ID, MoveCommand.MoveApplyCommand.class);
+        Command.add(ChangePropCommand.ID, ChangePropCommand.class);
+        Command.add(ChangePropCommand.ChangePropApplyCommand.ID, ChangePropCommand.ChangePropApplyCommand.class);
     }
 }

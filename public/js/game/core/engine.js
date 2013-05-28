@@ -38,13 +38,19 @@ EngineClass = function(){
     };
     this.removeSObject = function(sobj){
         this.stage.removeChild(sobj.getView());
-        this.sobjects.splice(this.sobjects.indexOf(sobj), 1);
+        Utils.remove(this.sobjects, sobj)
         if(sobj.onRemoved)
             sobj.onRemoved();
     };
+    this.findSObject = function(id){
+        for(var i in this.sobjects)
+            if(this.sobjects[i].id == id)
+                return this.sobjects[i]
+        return null;
+    }
     this.initialize = function(renderer){
-        this.width = renderer.width;
-        this.height = renderer.height;
+        this.width = Const.width;
+        this.height = Const.height;
         this.view = renderer.view;
         this.input.initialize();
         this.sound.initialize();

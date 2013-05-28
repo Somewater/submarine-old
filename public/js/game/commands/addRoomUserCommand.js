@@ -3,7 +3,7 @@ function AddRoomUserCommand(roomId){
     this.roomId = roomId
     this.data = true;
     this.execute = function(){
-        var user = new GameUser(this.data.user);
+        var user = GameUser.instantiate(this.data.user);
         if(!Model.room.containsUser(user)){
             Model.room.addUser(user);
             Model.dispatch(Events.ROOM_USERS_CHANGE, user)

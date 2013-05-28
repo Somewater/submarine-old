@@ -10,6 +10,7 @@
         <js>/js/game/core/targetable.js</js>
         <js>/js/game/core/boundable.js</js>
         <js>/js/game/core/bindable.js</js>
+        <js>/js/game/core/targetPoint.js</js>
         <js>/js/game/core/engine.js</js>
         <js>/js/game/core/inputManager.js</js>
         <js>/js/game/core/soundManager.js</js>
@@ -22,6 +23,7 @@
         <js>/js/game/model/model.js</js>
         <js>/js/game/model/gameUser.js</js>
         <js>/js/game/model/room.js</js>
+        <js>/js/game/model/gameUserAssoc.js</js>
         
         <js>/js/game/commands/*.js</js>
         

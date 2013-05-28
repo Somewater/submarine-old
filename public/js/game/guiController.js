@@ -42,8 +42,7 @@ GuiController = new (function(){
             for(var i in Model.room.users){
                 var user = Model.room.users[i];
                 var line = sprintf('%-5s %-5s %-5s %-5s', 
-                    user.uid, (user.uid == Model.user.uid ? '*' : '-'), user.score, user.health) 
-                    //user.uid + '\t' + (user.uid == Model.user.uid ? '*\t' : '') + user.score + '\t' + user.health;
+                    user.uid, (user.itsMe() ? '*' : '-') + (user.isOwner() ? '(W)' : ''), user.score, user.health) 
                 usersText += "\n" + line;
             }
         this.usersTablo.setText(usersText);

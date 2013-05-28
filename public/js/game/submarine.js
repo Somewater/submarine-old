@@ -5,6 +5,8 @@
 function Submarine(gameUser){
     SObject.apply(this);
     Boundable(this)
+    TargetPoint(this);
+    GameUserAssoc(this);
     this.image = "submarine.png";
     this.speed = 15.0;
     this.acceleration = 1.0;
@@ -13,16 +15,23 @@ function Submarine(gameUser){
     
     this.tick = function(){
         var px = NaN, py = NaN;
-        if(Engine.input.clickPoint){
-            px = Engine.input.clickPoint.x;
-            py = Engine.input.clickPoint.y;
+        if(this.gameUser.itsMe()){
+            if(Engine.input.clickPoint && !Utils.pointsEquals(Engine.input.clickPoint, this.targetPoint)){
+                this.targetPoint = Engine.input.clickPoint;
+                if(!Model.isOwner())
+                    Engine.server.send(new MoveCommand(this))
+            }
+        }
+        if(this.targetPoint){
+            px = this.targetPoint.x;
+            py = this.targetPoint.y;
             this.gotoCoords(px, py);
-        }else if(Engine.input.keydownX != 0 || Engine.input.keydownY != 0){
+        }/*else if(Engine.input.keydownX != 0 || Engine.input.keydownY != 0){
             var DIST = 100;
             px = this.x + Engine.input.keydownX * DIST;
             py = this.y + Engine.input.keydownY * DIST;
             this.gotoCoords(px, py);
-        }else
+        }*/else
             this.updateSpeed(0, 0);
         this.updatePosition();
 
@@ -32,10 +41,12 @@ function Submarine(gameUser){
     };
     Submarine.instance = this;
     this.onAdded = function(){
-        Engine.ticker.add(this.checkCollision, 50, this);
+        if(Model.isOwner())
+            Engine.ticker.add(this.checkCollision, 50, this);
     }
     this.onRemoved = function(){
-        Engine.ticker.remove(this.checkCollision);
+        if(Model.isOwner())
+            Engine.ticker.remove(this.checkCollision);
     }
     this.checkCollision = function(dt){
         var inters = Engine.intersectSObjects(this);
@@ -49,6 +60,7 @@ function Submarine(gameUser){
                 }
             }else if(obj instanceof ScoreItem) {
                 this.changeScore(1);
+                Utils.remove(Model.scoreItems, obj)
                 Engine.removeSObject(obj);
             }
         }
@@ -57,14 +69,9 @@ function Submarine(gameUser){
     }
     this.changeHealth = function(delta){
         this.gameUser.addHealth(delta);
-        if(delta < 0){
-            Engine.sound.play('growl');
-        }
     }
     this.changeScore = function(delta){
         this.gameUser.addScore(delta);
-        if(delta > 0)
-            Engine.sound.play('collect');
     }
     this.isAttacking = function(sobjId){
         for (var i = 0; i < this.attacking.length; i++)

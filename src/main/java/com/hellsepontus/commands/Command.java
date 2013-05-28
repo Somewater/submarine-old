@@ -9,11 +9,7 @@ import com.hellsepontus.model.Model;
 import com.hellsepontus.model.Room;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.Arrays;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -74,22 +70,6 @@ public class Command {
                 command.model = model;
                 command.data = data;
                 
-                Field[] fields = data.getClass().getFields();
-                for(Map.Entry entry : data.entrySet()){
-                    Field cmdField = null;
-                    try {
-                        cmdField = command.getClass().getField((String)entry.getKey());
-                    } catch (NoSuchFieldException e) {
-                    }
-                    if(cmdField != null){
-                        try{
-                            cmdField.set(command, entry.getValue());
-                        }catch (Exception ex){
-                            logger.finer("Can't assign field " + entry.getKey() + " to command " + command);
-                        }
-                    }
-                }
-                
                 return command;
             } catch (InstantiationException e) {
                 throw new RuntimeException("Command " + id + " instantiation error", e);
@@ -123,12 +103,13 @@ public class Command {
     }
 
     public void send(CommandData commandData){
-        if(ackRequest.isAckRequested())
-            ackRequest.sendAckData(commandData);
-        else
-            client.sendEvent(EVENT_NAME, checkJsonData(commandData));
+        userToSend().sendEvent(EVENT_NAME, checkJsonData(commandData));
         if(logger.isLoggable(Level.INFO))
             logger.info("Command '" + commandData.id + "' sended to client");
+    }
+    
+    protected SocketIOClient userToSend(){
+        return client;
     }
     
     public void sendToAll(Room room, Command command) {
@@ -143,10 +124,15 @@ public class Command {
     }
 
     public void sendToAll(Room room, CommandData commandData){
-        for(GameUser user : room.users)
+        List<GameUser> users = usersToSend(room); 
+        for(GameUser user : users)
             user.getClient().sendEvent(EVENT_NAME, checkJsonData(commandData));
         if(logger.isLoggable(Level.INFO))
             logger.info("Command '" + commandData.id + "' sended broadcast");
+    }
+    
+    protected List<GameUser> usersToSend(Room room) {
+        return room.users; 
     }
     
     private GameUser cachedGameUser;

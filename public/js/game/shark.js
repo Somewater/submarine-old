@@ -4,13 +4,14 @@
 
 function Shark(){
     SObject.apply(this);
+    TargetPoint(this);
     this.image = "shark.png";
     this.speed = .5;
-    this.targetPoint = null;
     this.tick = function(){
-        if(!this.targetPoint){
+        if(!this.targetPoint && Model.isOwner()){
             this.targetPoint = new PIXI.Point(Engine.width * Math.random(), Engine.height * Math.random());
         }
+        if(!this.targetPoint) return
         this.gotoCoords(this.targetPoint.x, this.targetPoint.y);
         this.updatePosition();
 

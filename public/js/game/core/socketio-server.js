@@ -12,7 +12,7 @@ function SocketIOServer(){
             this.socket.socket.connect()
             return
         }
-        this.socket = io.connect('http://localhost:4000');
+        this.socket = io.connect('http://' + window.location.hostname + ':4000');
         this.socket.on('connect', function() {
             self.serverManager.onConnect();
         });

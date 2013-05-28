@@ -40,8 +40,12 @@ public class Room implements IJsonable{
     }
     
     public void removeUser(GameUser user){
-        users.remove(user);
-        user.setRoom(null);
+        if(user.isOwner()){
+            Model.instance.destroyRoom(this.roomId);
+        }else {
+            users.remove(user);
+            user.setRoom(null);
+        }
     }
     
     public boolean containsUser(int uid) {
@@ -63,5 +67,9 @@ public class Room implements IJsonable{
 
     public void fromData(Map<String, Object> data) {
         throw new NotImplementedException();
+    }
+
+    public GameUser owner() {
+        return users.get(0);
     }
 }

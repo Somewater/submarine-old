@@ -3,9 +3,9 @@ function RemoveRoomUserCommand(roomId){
     this.roomId = roomId
     this.data = true;
     this.execute = function(){
-        var user = new GameUser(this.data.user);
+        var user = GameUser.instantiate(this.data.user);
         if(Model.room.containsUser(user)){
-            Model.room.removeUser(user);
+            user = Model.room.removeUser(user);
             Model.dispatch(Events.ROOM_USERS_CHANGE, user)
             Model.dispatch(Events.ROOM_USER_REMOVE, user)
             trace("User uid=" + user.uid + " removed from room #" + Model.room.roomId);

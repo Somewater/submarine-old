@@ -58,4 +58,8 @@ public class Model {
                     return room;
         return null;
     }
+
+    public void destroyRoom(int roomId) {
+        roomById.remove(roomId);
+    }
 }

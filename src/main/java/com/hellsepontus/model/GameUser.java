@@ -45,4 +45,8 @@ public class GameUser implements IJsonable{
     public void fromData(Map<String, Object> data) {
         throw new NotImplementedException();
     }
+    
+    public boolean isOwner(){
+        return room != null && room.owner().uid == this.uid;
+    }
 }

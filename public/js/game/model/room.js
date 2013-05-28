@@ -8,16 +8,15 @@ function Room(data){
         var user = Model.user;
         for(var i in usersData){
             var userData = usersData[i];
-            if(user && user.uid == userData.uid){
-                GameUser.call(user, userData)
-                this.users.push(user);
-            }else
-                this.users.push(new GameUser(userData));
+            user = GameUser.instantiate(userData)
+            user.room = this;
+            this.users.push(user);
         }
     }
     this.setUsers(data.users || []);
     this.addUser = function(gameUser){
         this.users.push(gameUser);
+        gameUser.room = this;
     }
     this.removeUser = function(gameUser){
         var users = this.users;
@@ -26,7 +25,8 @@ function Room(data){
             var user2 = users[i];
             if(user2.uid == gameUser.uid){
                 users.splice(i, 1);
-                deleted = true;
+                user2.room = null;
+                deleted = user2;
                 break;
             }
         }
@@ -38,5 +38,15 @@ function Room(data){
             if(users[i].uid == gameUser.uid)
                 return users[i];
         return false
+    }
+    this.owner = function(){
+        return this.users[0];
+    }
+    this.findUserById = function(uid){
+        var users = this.users;
+        for(var i in users)
+            if(users[i].uid == uid)
+                return users[i];
+        return null;
     }
 }

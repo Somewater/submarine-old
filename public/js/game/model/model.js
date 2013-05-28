@@ -10,4 +10,8 @@ Model = new (function(){
     this.scoreItems = null;
     this.hero = null;
     this.heroes = null;
+    
+    this.isOwner = function(){
+        return this.user && this.user.isOwner()
+    }
 })()

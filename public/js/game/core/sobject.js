@@ -1,6 +1,6 @@
 SObject.idCounter = 1;
 function SObject() {
-    this.id = SObject.idCounter++;
+    this.id = (Model.isOwner() ? SObject.idCounter++ : undefined);
     this.image = null;
     this.view = null;
     this.onAdded = null;
@@ -52,5 +52,22 @@ function SObject() {
         this._rect.x -= this._rect.width * 0.5;
         this._rect.y -= this._rect.height * 0.5;
         return this._rect;
+    }
+    this.toData = function(){
+        return {id: this.id, x: this.x, y: this.y, sx: this.speedX, sy: this.speedY}
+    }
+    this.fromData = function(data){
+        if(data.id != this.id){
+            if(!this.id)
+                this.id = data.id
+            else
+                throw "id not equals, this.id=" + this.id + ", data.id=" + data.id
+        }
+        this.x = data.x;
+        this.y = data.y;
+        this.speedX = data.sx;
+        this.speedY = data.sy;
+        if(!this.tick)
+            this.updatePosition();
     }
 }

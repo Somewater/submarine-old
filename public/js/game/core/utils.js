@@ -43,6 +43,18 @@ Utils = new (function(){
             result = '0' + result;
         return result;
     }
+    this.pointsEquals = function(p1, p2){
+        if(p1 == null)
+            return p2 == null;
+        else if(p2 == null)
+            return false;
+        return p1.x == p2.x && p1.y == p2.y;
+    }
+    this.remove = function(array, element){
+        var idx = array.indexOf(element)
+        if(idx != -1)
+            array.splice(idx, 1);
+    }
 });
 function trace(msg){
     console.debug(msg);
