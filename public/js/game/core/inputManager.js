@@ -50,7 +50,7 @@ Engine.input = new function(){
         }
         $(renderer.view).on(Modernizr.touch ? "touchstart" : "mousedown", clickDownFunc);
         $(renderer.view).on(Modernizr.touch ? "touchend" : "mouseup", clickUpFunc);
-        $(renderer.view).on(Modernizr.touch ? "touchmove " : "mousemove", moveFunc);
+        //$(renderer.view).on(Modernizr.touch ? "touchmove " : "mousemove", moveFunc); // не используем gesture
     };
     this.onKeyChange = function(keyCode, down){
         var preventDefault = false;

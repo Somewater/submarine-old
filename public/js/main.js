@@ -12,7 +12,7 @@
  */
 
 // You can use either PIXI.WebGLRenderer or PIXI.CanvasRenderer
-var renderer = PIXI.autoDetectRenderer(Math.min(Const.width, window.innerWidth), Math.min(Const.height, window.innerHeight));
+var renderer = PIXI.autoDetectRenderer(Const.width, Const.height);
 document.body.appendChild(renderer.view);
 requestAnimFrame(animate);
 function animate() {

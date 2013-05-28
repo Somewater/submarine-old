@@ -34,12 +34,7 @@ GameController = new (function(){
         Model.scoreItems = []
     }
     this.createInitialCreatures = function(){
-        var submarine = new Submarine(Model.user);
-        submarine.setX(renderer.width / 2);
-        submarine.setY(renderer.height / 2);
-        Engine.addSObject(submarine);
-        Model.hero = submarine
-        Model.heroes.push(submarine);
+        this.onUserAdded(Model.user)
 
         for (var i = 0; i < 10; i++) {
             var shark = new Shark();
@@ -91,9 +86,12 @@ GameController = new (function(){
         submarine.setY(renderer.height / 2 + 100 * Math.cos(degreeIndex));
         Engine.addSObject(submarine);
         Model.heroes.push(submarine);
+        if(gameUser.itsMe())
+            Model.hero = submarine
         gameUser.on('score', this.onGameUserScoreChanged, this)
         gameUser.on('health', this.onGameUserHealthChanged, this)
         this.needSync = true
+        return submarine
     }
     this.onUserRemoved = function(gameUser){
         var submarine = null;
