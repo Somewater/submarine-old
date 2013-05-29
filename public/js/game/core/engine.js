@@ -8,7 +8,7 @@
 
 EngineClass = function(){
     this.sobjects = [];
-    this.stage = new PIXI.Stage(0xF0F0FF, true);
+    this.stage = new PIXI.Stage(0xF0F0FF);
     this.view = null;
     this.width = 0;
     this.height = 0;
