@@ -1239,11 +1239,11 @@ PIXI.BitmapText.prototype.updateText = function()
 
     for(i = 0; i < chars.length; i++)
     {
-        var char = PIXI.Sprite.fromFrame(chars[i].charCode);
-        char.position.x = (chars[i].position.x + lineAlignOffsets[chars[i].line]) * scale;
-        char.position.y = chars[i].position.y * scale;
-        char.scale.x = char.scale.y = scale;
-        this.addChild(char);
+        var chr = PIXI.Sprite.fromFrame(chars[i].charCode);
+        chr.position.x = (chars[i].position.x + lineAlignOffsets[chars[i].line]) * scale;
+        chr.position.y = chars[i].position.y * scale;
+        chr.scale.x = chr.scale.y = scale;
+        this.addChild(chr);
     }
 
     this.width = pos.x * scale;
