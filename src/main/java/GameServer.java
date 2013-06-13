@@ -1,6 +1,3 @@
-import com.corundumstudio.socketio.Configuration;
-import com.corundumstudio.socketio.SocketIOServer;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.InterruptedException;
@@ -18,13 +15,13 @@ import com.hellsepontus.commands.logic.MoveCommand;
 import com.hellsepontus.commands.logic.SyncAllCommand;
 import com.hellsepontus.model.Model;
 import com.hellsepontus.model.Room;
+import com.hellsepontus.socketio.Server;
 
 public class GameServer {
     
     private static Logger logger = Logger.getLogger(GameServer.class.getName());
     public static Properties properties;
     public static String ROOT;
-    public static Model model;
     
     public static void main(String[] args) throws InterruptedException{
         properties = new Properties();
@@ -51,44 +48,11 @@ public class GameServer {
             }
         }
         
-        Configuration config = new Configuration();
-        config.setHostname("0.0.0.0");
-        config.setPort(port);
-        
         configurateCommands();
-
-        final SocketIOServer server = new SocketIOServer(config);
-        Command.server = server;
-        server.addConnectListener(new ConnectListener() {
-            public void onConnect(SocketIOClient client) {
-                logger.fine("Client #" + client.getSessionId() + " connected!");
-            }
-        });
-        server.addEventListener(Command.EVENT_NAME, CommandData.class, new DataListener<CommandData>() {
-            public void onData(SocketIOClient client, CommandData data, AckRequest ackRequest){
-                try {
-                    Command command = Command.createCommand(data.id, data.data, client, ackRequest, model);
-                    if(logger.isLoggable(Level.INFO))
-                        logger.info("Command '" + command.id + "' received: " + command.toString());
-                    command.execute();
-                }catch (Exception ex){
-                    ex.printStackTrace();
-                }
-            }
-        });
-        server.addDisconnectListener(new DisconnectListener() {
-            public void onDisconnect(SocketIOClient client) {
-                logger.fine("Client #" + client.getSessionId() + " disconnected");
-                Room room = model.findRoomByClient(client);
-                if(room != null)
-                    new RemoveRoomUserCommand(room.findUserByClient(client)).execute();
-            }
-        });
         
-        model = new Model(properties);
-
-        server.start();
-        logger.severe("GameServer started on " + server.getConfiguration().getHostname() + ":" + server.getConfiguration().getPort());
+        Server server = new Server(new Model(properties));
+        server.start(port);
+        logger.severe("GameServer started on 0.0.0.0:" + port);
 
         Thread.sleep(Integer.MAX_VALUE);
 

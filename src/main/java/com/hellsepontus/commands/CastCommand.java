@@ -28,16 +28,16 @@ public class CastCommand extends Command {
         if(this.getUser().isOwner())
             throw new RuntimeException("User uid=" + getUser().uid + " owner of room, cant send non broadcast messages");
         else
-            super.send();    //To change body of overridden methods use File | Settings | File Templates.
+            super.send();
     }
 
     @Override
     protected List<GameUser> usersToSend(Room room) {
-        return room.users.subList(1, room.users.size());
+        return room.users().subList(1, room.users().size());
     }
 
     @Override
-    protected SocketIOClient userToSend() {
-        return getUser().getRoom().users.get(0).getClient();    //To change body of overridden methods use File | Settings | File Templates.
+    protected ICommandClient userToSend() {
+        return getUser().getRoom().users().get(0).getClient();
     }
 }

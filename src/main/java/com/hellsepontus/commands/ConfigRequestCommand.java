@@ -11,6 +11,6 @@ public class ConfigRequestCommand extends Command{
 
     @Override
     public void execute() {
-        send(ID, (Map) model.getPropertiesMap());
+        send(ID, (Map) manager.model().getPropertiesMap());
     }
 }

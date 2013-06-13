@@ -1,14 +1,12 @@
 package com.hellsepontus.model;
 
-import com.corundumstudio.socketio.SocketIOClient;
+import com.hellsepontus.commands.ICommandClient;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class Model {
-    
-    public static Model instance;
+public class Model implements Room.IRoomDestroyer{
     
     public Map<Integer, Room> roomById;
     public Map<Integer, GameUser> userById;
@@ -16,7 +14,6 @@ public class Model {
     private Map<String, String> propertiesMap;
     
     public Model(Properties properties){
-        instance = this;
         this.config = properties;
         roomById = new HashMap<Integer, Room>();
         userById = new HashMap<Integer, GameUser>();
@@ -34,26 +31,15 @@ public class Model {
     public Room getOrCreateRoom(int roomId){
         Room room = roomById.get(roomId);
         if(room == null){
-            room = new Room();
-            room.roomId = roomId;
+            room = Room.instantiate(roomId, this);
             roomById.put(roomId, room);
         }
         return room;
     }
     
-    public GameUser getOrCreateUser(SocketIOClient client){
-        GameUser user = userById.get(client.getSessionId().hashCode());
-        if(user == null){
-            user = GameUser.instantiate();
-            user.setClient(client);
-            userById.put(client.getSessionId().hashCode(), user);
-        }
-        return user;
-    }
-    
-    public Room findRoomByClient(SocketIOClient client){
+    public Room findRoomByClient(ICommandClient client){
         for(Room room : roomById.values())
-            for (GameUser user : room.users)
+            for (GameUser user : room.users())
                 if(user.getClient().equals(client))
                     return room;
         return null;

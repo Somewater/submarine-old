@@ -15,7 +15,7 @@ public class RoomListRequestCommand extends Command{
 
     @Override
     public void execute() {
-        List rooms = Arrays.asList(Room.instantiate(1));
+        List rooms = Arrays.asList(manager.model().getOrCreateRoom(1));
         send(ID, Collections.singletonMap("rooms", (Object)rooms));
     }
 }

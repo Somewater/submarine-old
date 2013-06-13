@@ -34,7 +34,7 @@ public class ChangePropCommand extends CastCommand{
 
         @Override
         public Map<String, Object> toData() {
-            return this.data;
+            return data;
         }
     }
 }

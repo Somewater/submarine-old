@@ -15,7 +15,7 @@ public class ConnectToRoomCommand extends Command {
 
     @Override
     public void execute() {
-        Room room = model.getOrCreateRoom(this.roomId);
+        Room room = manager.model().getOrCreateRoom(this.roomId);
         if(room.containsUser(getUser().uid))
             throw new RuntimeException("Already in room");
         room.addUser(getUser());

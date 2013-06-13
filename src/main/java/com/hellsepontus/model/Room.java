@@ -1,28 +1,29 @@
 package com.hellsepontus.model;
 
 import com.corundumstudio.socketio.SocketIOClient;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Room implements IJsonable{
+public class Room implements IJson {
     private static int roomIdCounter = 0;
-    public int roomId;
-    public ArrayList<GameUser> users;
+    private int roomId;
+    private ArrayList<GameUser> users;
+    private IRoomDestroyer destroyer;
     
-    public Room(){
+    private Room(IRoomDestroyer destroyer){
         users = new ArrayList();
+        this.destroyer = destroyer;
     }
 
-    public static Room instantiate(){
-        return instantiate(++roomIdCounter);
+    protected static Room instantiate(IRoomDestroyer destroyer){
+        return instantiate(++roomIdCounter, destroyer);
     }
     
-    public static Room instantiate(int id){
-        Room room = new Room();
+    protected static Room instantiate(int id, IRoomDestroyer destroyer){
+        Room room = new Room(destroyer);
         room.roomId = id;
         return room;
     }
@@ -41,11 +42,16 @@ public class Room implements IJsonable{
     
     public void removeUser(GameUser user){
         if(user.isOwner()){
-            Model.instance.destroyRoom(this.roomId);
+            destroyer.destroyRoom(this.roomId);
+            destroyer = null;
         }else {
             users.remove(user);
             user.setRoom(null);
         }
+    }
+    
+    public List<GameUser> users(){
+        return users;
     }
     
     public boolean containsUser(int uid) {
@@ -66,10 +72,14 @@ public class Room implements IJsonable{
     }
 
     public void fromData(Map<String, Object> data) {
-        throw new NotImplementedException();
+        throw new NoSuchMethodError();
     }
 
     public GameUser owner() {
         return users.get(0);
+    }
+    
+    public interface IRoomDestroyer{
+        void destroyRoom(int roomId);
     }
 }
