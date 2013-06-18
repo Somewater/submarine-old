@@ -1,0 +1,4 @@
+-js ./../public/haxe/haxe.js
+-cp src
+-debug
+-main Test

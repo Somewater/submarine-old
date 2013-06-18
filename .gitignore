@@ -8,5 +8,6 @@ target/*
 wro4j/*
 public/js/application.js
 public/js/vendor.js
+public/haxe/*
 log/*
 tmp/*
