@@ -1,0 +1,4 @@
+-js /home/pav/city_repo/ContryClient/bin/haxe/haxe.js
+-cp src
+-debug
+-main Test

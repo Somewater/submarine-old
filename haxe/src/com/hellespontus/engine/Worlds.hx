@@ -1,5 +1,5 @@
 package com.hellespontus.engine;
-class WorldController {
+class Worlds {
 
     private var worlds:Array<World>;
 

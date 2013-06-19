@@ -1,10 +1,6 @@
 package com.hellespontus.engine;
 
-#if haxe_207
-    typedef IntMap<T> = IntHash<T>;
-#else
-    import haxe.ds.IntMap;
-#end
+import haxe.ds.IntMap;
 
 class World implements IWorld{
 
