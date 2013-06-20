@@ -1,4 +1,5 @@
 package ;
+import com.hellespontus.engine.core.World;
 import com.hellespontus.engine.core.IEngine;
 import com.hellespontus.engine.core.User;
 import com.hellespontus.engine.d2.Entity2DRotated;
@@ -19,6 +20,7 @@ import com.hellespontus.engine.d2.Engine;
         }
         trace("Hellespontus started, engine time=" + engine.time());
 
+        World;
         Entity2DRotated;
         User;
     }

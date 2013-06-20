@@ -4,7 +4,7 @@ interface IEntity {
     var interpolable:Bool;
     var user:IUser;
 
-    function interpolate(_from:IEntity, distance:Float):Void;
+    function interpolate(distance:Float, _to:IEntity):Void;
 
     function advance(delta:Int):Void;
 

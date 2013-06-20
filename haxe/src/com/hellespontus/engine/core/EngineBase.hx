@@ -130,9 +130,9 @@ class EngineBase implements IEngine{
             }else if(_to == null){
                 selected = _from;
             }else{
-                _to = _to.clone();
-                _to.interpolate(time, _from);
-                return _to;
+                _from = _from.clone();
+                _from.interpolate(time, _to);
+                return _from;
             }
         } else if (worlds.length == 1) {
             selected = worlds[0];

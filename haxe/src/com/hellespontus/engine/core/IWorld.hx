@@ -10,7 +10,7 @@ interface IWorld {
 
     function time():Int;
 
-    function interpolate(time:Int, ?_from:IWorld):Void;
+    function interpolate(time:Int, ?_to:IWorld):Void;
 
     function get(id:Int):IEntity;
 

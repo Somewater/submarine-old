@@ -7,13 +7,14 @@ class Entity implements IEntity{
     public var user:IUser;
 
     public function new() {
+        interpolable = true;
         values = new Array<Float>();
     }
 
-    public function interpolate(_from:IEntity, distance:Float):Void {
-        var other:Entity = cast(_from, Entity);
+    public function interpolate(distance:Float, _to:IEntity):Void {
+        var other:Entity = cast(_to, Entity);
         for(i in 0...values.length){
-            values[i] = (values[i] - other.values[i]) * distance +  other.values[i];
+            values[i] = values[i] + (other.values[i] - values[i]) * distance;
         }
     }
 
