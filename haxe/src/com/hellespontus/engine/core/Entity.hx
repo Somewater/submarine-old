@@ -3,11 +3,9 @@ class Entity implements IEntity{
 
     private var values:Array<Float>;
     public var id:Int;
-    public var interpolable:Bool;
     public var user:IUser;
 
     public function new() {
-        interpolable = true;
         values = new Array<Float>();
     }
 
@@ -30,7 +28,6 @@ class Entity implements IEntity{
         var e = initClone();
         e.id = this.id;
         e.user = this.user;
-        e.interpolable = this.interpolable;
         e.values = this.values.copy();
         return e;
     }

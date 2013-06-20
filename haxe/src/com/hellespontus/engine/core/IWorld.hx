@@ -10,7 +10,9 @@ interface IWorld {
 
     function time():Int;
 
-    function interpolate(time:Int, ?_to:IWorld):Void;
+    function interpolate(time:Int, _to:IWorld):Void;
+
+    function advance(delta:Int):Void;
 
     function get(id:Int):IEntity;
 

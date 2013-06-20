@@ -54,25 +54,18 @@ class World implements IWorld{
         return m;
     }
 
-    public function interpolate(time:Int, ?_to:IWorld):Void {
-        var delta:Int = time - this.time();
-        var entity:IEntity;
-
-        if(_to == null){
-            if(delta <= 0)
-                throw "Can only forward";
-            for(entity in entities)
-                entity.advance(delta);
-        } else {
-            var distance:Float = (time - this.time()) / (_to.time() - this.time());
-            for(entity in entities){
-                if(entity.interpolable)
-                    entity.interpolate(distance, _to.get(entity.id));
-                else
-                    entity.advance(delta);
-            }
+    public function interpolate(time:Int, _to:IWorld):Void {
+        var distance:Float = (time - this.time()) / (_to.time() - this.time());
+        for(entity in entities){
+            entity.interpolate(distance, _to.get(entity.id));
         }
         this._time = time;
+    }
+    
+    public function advance(delta:Int):Void {
+        for(entity in entities)
+            entity.advance(delta);
+        this._time += delta;
     }
 
     public function time():Int {

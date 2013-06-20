@@ -32,10 +32,27 @@ class Entity2D extends Entity{
         values[Y] += delta * values[VY];
     }
 
-    public function x():Float return values[X];
-    public function y():Float return values[Y];
-    public function vx():Float return values[VX];
-    public function vy():Float return values[VY];
-    public function ax():Float return values[AX];
-    public function ay():Float return values[AY];
+    public var x(get,set):Float;
+    public function get_x():Float { return values[X]; }
+    public function set_x(v:Float):Float { return values[X] = v; }
+    
+    public var y(get,set):Float;
+    public function get_y():Float { return values[Y]; }
+    public function set_y(v:Float):Float { return values[Y] = v; }
+    
+    public var vx(get,set):Float;
+    public function get_vx():Float { return values[VX]; }
+    public function set_vx(v:Float):Float { return values[VX] = v; }
+    
+    public var vy(get,set):Float;
+    public function get_vy():Float { return values[VY]; }
+    public function set_vy(v:Float):Float { return values[VY] = v; }
+    
+    public var ax(get,set):Float;
+    public function get_ax():Float { return values[AX]; }
+    public function set_ax(v:Float):Float { return values[AX] = v; }
+    
+    public var ay(get,set):Float;
+    public function get_ay():Float { return values[AY]; }
+    public function set_ay(v:Float):Float { return values[AY] = v; }
 }

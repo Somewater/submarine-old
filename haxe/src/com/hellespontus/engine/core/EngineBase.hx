@@ -141,7 +141,7 @@ class EngineBase implements IEngine{
 
         if(selected.time() < time){
             selected = selected.clone();
-            selected.interpolate(time);
+            selected.advance(time - selected.time());
         }
         return selected;
     }
