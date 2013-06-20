@@ -1,4 +1,8 @@
 package ;
+import com.hellespontus.engine.core.IUser;
+import com.hellespontus.engine.core.IWorld;
+import com.hellespontus.engine.controller.EngineControllerBase;
+import com.hellespontus.engine.controller.Ticker;
 import com.hellespontus.engine.core.World;
 import com.hellespontus.engine.core.IEngine;
 import com.hellespontus.engine.core.User;
@@ -8,6 +12,7 @@ import com.hellespontus.engine.d2.Engine;
 @:expose class Test {
 
     public static var engine:IEngine;
+    public static var ticker:Ticker;
 
     public function new() {
     }
@@ -23,6 +28,9 @@ import com.hellespontus.engine.d2.Engine;
         World;
         Entity2DRotated;
         User;
+        
+        ticker = new Ticker();
+        new SubmarineEngineController(engine, ticker).start();
     }
 
     private static var defaultTrace:Dynamic;
@@ -32,5 +40,23 @@ import com.hellespontus.engine.d2.Engine;
             js.Browser.window.console.log((i != null?i.fileName + ":" + i.lineNumber + ": ":"") + v);
             oldTrace(v, i);
         };
+    }
+}
+
+class SubmarineEngineController extends EngineControllerBase{
+
+    override private function connectToServer():Void {
+        trace('connect to server...');
+        fakeWorld();
+        onEngineInitialized();
+    }
+
+    private function fakeWorld():Void {
+        var u:IUser = engine.createUser();
+        engine.user = u;
+    
+        var w:IWorld = new World(0);
+        engine.addState(w);
+        
     }
 }

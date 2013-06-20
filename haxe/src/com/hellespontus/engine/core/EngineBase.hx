@@ -1,5 +1,6 @@
 package com.hellespontus.engine.core;
 
+import haxe.Timer;
 import haxe.ds.IntMap;
 typedef TEntityCallback = IEntity -> Dynamic;
 
@@ -11,9 +12,7 @@ class EngineBase implements IEngine{
     public var user:IUser;
     private var entityListeners:IntMap<List<TEntityCallback>>;
     private var serverTimeDelta:Int;
-    #if js
-        private var startEngineTime:Float;
-    #end
+    private var startEngineTime:Float;
 
     private var entityIdCounter:Int;
     private var userIdCounter:Int;
@@ -22,11 +21,10 @@ class EngineBase implements IEngine{
     public function new() {
         entityListeners = new IntMap<List<TEntityCallback>>();
         serverTimeDelta = 0;
-        #if js
-            startEngineTime = Date.now().getTime();
-        #end
+        startEngineTime = Date.now().getTime();
         entityIdCounter = 1;
         userIdCounter = 1;
+        worlds = new Array<IWorld>();
     }
 
     public function initialize(serverTime:Int):Void {
@@ -80,13 +78,14 @@ class EngineBase implements IEngine{
     }
 
     public function time():Int {
-        #if neko || php || cpp || cs || java
-            return Sys.time() * 1000 - serverTimeDelta;
-        #elseif flash
-            return Std.int(flash.Lib.getTimer() - serverTimeDelta);
-        #elseif js
-            return Std.int(Date.now().getTime() - startEngineTime - serverTimeDelta);
-        #end
+        return Std.int(Timer.stamp() * 1000 - startEngineTime - serverTimeDelta);
+//        #if neko || php || cpp || cs || java
+//            return Sys.time() * 1000 - serverTimeDelta;
+//        #elseif flash
+//            return Std.int(flash.Lib.getTimer() - serverTimeDelta);
+//        #elseif js
+//            return Std.int(Date.now().getTime() - startEngineTime - serverTimeDelta);
+//        #end
     }
 
     public function addState(world:IWorld):Void {
@@ -107,6 +106,25 @@ class EngineBase implements IEngine{
     }
 
     public function world():IWorld {
+        if(isHost())
+            return advanceHostWorld();
+        else
+            return interpolateWorld();
+    }
+    
+    private function advanceHostWorld():IWorld {
+        var w:IWorld = worlds[worlds.length - 1];
+        if(w == null)
+            throw "Зrevious world not assigned";
+        else{
+            var delta:Int = this.time() - w.time();
+            w = w.clone();
+            w.advance(delta);
+        }
+        return w;
+    }
+    
+    private function interpolateWorld():IWorld{
         var lerp:Int = user.lerp;
         var time:Int = this.time() - lerp;
         if(time < 0) time = 0;
