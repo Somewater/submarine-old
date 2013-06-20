@@ -22,4 +22,5 @@ interface IEngine {
     function isHost():Bool;
 
     function time():Int;// synchronized with server
+    function addState(world:IWorld):Void;
 }
