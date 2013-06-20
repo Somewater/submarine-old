@@ -1,4 +1,4 @@
-package com.hellespontus.engine;
+package com.hellespontus.engine.core;
 
 import haxe.ds.IntMap;
 

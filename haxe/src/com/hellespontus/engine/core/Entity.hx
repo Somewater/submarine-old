@@ -1,9 +1,10 @@
-package com.hellespontus.engine;
+package com.hellespontus.engine.core;
 class Entity implements IEntity{
 
     private var values:Array<Float>;
     public var id:Int;
     public var interpolable:Bool;
+    public var user:IUser;
 
     public function new() {
         values = new Array<Float>();
@@ -27,12 +28,13 @@ class Entity implements IEntity{
     public function clone():IEntity {
         var e = initClone();
         e.id = this.id;
+        e.user = this.user;
         e.interpolable = this.interpolable;
         e.values = this.values.copy();
         return e;
     }
 
     private function initClone():Entity {
-        return new Entity();
+        return Type.createInstance(Type.getClass(this), []);
     }
 }

@@ -1,18 +1,26 @@
 package ;
+import com.hellespontus.engine.core.IEngine;
+import com.hellespontus.engine.core.User;
+import com.hellespontus.engine.d2.Entity2DRotated;
 import haxe.Log;
-import com.hellespontus.engine.Worlds;
+import com.hellespontus.engine.d2.Engine;
 @:expose class Test {
 
-    public static var model:Worlds;
+    public static var engine:IEngine;
 
     public function new() {
     }
 
     public static function main(){
         redirectTrace();
+        engine = new Engine();
+        for(i in 0...1000000){
 
-        trace("Hellespontus started");
-        model = new Worlds();
+        }
+        trace("Hellespontus started, engine time=" + engine.time());
+
+        Entity2DRotated;
+        User;
     }
 
     private static var defaultTrace:Dynamic;
