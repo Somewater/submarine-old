@@ -27,9 +27,9 @@ class Entity2DRotated extends Entity2D{
 
     public function angle():Float return values[ANGLE + ACCELERATION_FIX()];
     public function vangle():Float return values[VANGLE + ACCELERATION_FIX()];
-    public function vangle():Float return values[AANGLE + ACCELERATION_SHIFT];
+    public function aangle():Float return values[AANGLE + ACCELERATION_SHIFT];
 
-    private inline var ACCELERATION_SHIFT:Int = 2;
+    private static inline var ACCELERATION_SHIFT:Int = 2;
     private inline function ACCELERATION_FIX():Int {
         if(this.accelerated)
             return ACCELERATION_SHIFT;// +2 позиции занимают значения усктрений
