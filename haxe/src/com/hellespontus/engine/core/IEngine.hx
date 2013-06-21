@@ -14,7 +14,7 @@ interface IEngine {
     function addEntityListener(entityId:Int, callback: IEntity -> Dynamic):Void;
     function removeEntityListener(entityId:Int, callback: IEntity -> Dynamic):Void;
 
-    function createEntity(?id:Int = -1, ?user:IUser = null):IEntity;
+    function createEntity(?user:IUser = null, ?id:Int = -1):IEntity;
     function createUser(?id:Int = -1):IUser;
 
     function world():IWorld;

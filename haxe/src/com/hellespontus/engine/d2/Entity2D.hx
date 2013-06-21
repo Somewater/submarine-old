@@ -14,7 +14,7 @@ class Entity2D extends Entity{
 
     public function new() {
         super();
-        accelerated = false;
+        accelerated = true;
     }
 
     public function initialize():Void {
@@ -55,4 +55,8 @@ class Entity2D extends Entity{
     public var ay(get,set):Float;
     public function get_ay():Float { return values[AY]; }
     public function set_ay(v:Float):Float { return values[AY] = v; }
+
+    override public function toString():String {
+        return 'E2d(x=${Std.int(x)}, y=${Std.int(y)}, vx=${round(vx)}, vy=${round(vy)}})';
+    }
 }

@@ -35,4 +35,12 @@ class Entity implements IEntity{
     private function initClone():Entity {
         return Type.createInstance(Type.getClass(this), []);
     }
+
+    public function toString():String {
+        return '[Entity($values)]';
+    }
+
+    private function round(v:Float):Float {
+        return Std.int(v * 10000) * 0.0001;
+    }    
 }

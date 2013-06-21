@@ -32,7 +32,7 @@ class EngineBase implements IEngine{
         serverTimeDelta = this.time() - serverTime;
     }
 
-    public function createEntity(?id:Int = -1, ?user:IUser = null):IEntity {
+    public function createEntity(?user:IUser = null, ?id:Int = -1):IEntity {
         var e:IEntity = createEntityInstance();
         e.id = if(id == -1) generateEntityId(user) else id;
         e.user = user;
@@ -133,8 +133,8 @@ class EngineBase implements IEngine{
         if(worlds.length > 1){
             var _from:IWorld = null;
             var _to:IWorld = null;
-            for(i in -worlds.length...1){
-                var w:IWorld = worlds[i];
+            for(i in -(worlds.length - 1)...1){
+                var w:IWorld = worlds[-i];
                 if(w.time() > time){
                     _to = w;
                 }else if(w.time() < time){

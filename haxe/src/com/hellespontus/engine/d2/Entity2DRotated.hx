@@ -44,4 +44,8 @@ class Entity2DRotated extends Entity2D{
     public var aangle(get,set):Float;
     public function get_aangle():Float { return values[AANGLE + ACCELERATION_SHIFT]; }
     public function set_aangle(v:Float):Float { return values[AANGLE + ACCELERATION_SHIFT] = v; }
+
+    override public function toString():String {
+        return 'E2d(x=${Std.int(x)}, y=${Std.int(y)}, vx=${round(vx)}, vy=${round(vy)}, angle=${Std.int(angle)}, av=${round(vangle)}, })';
+    }
 }

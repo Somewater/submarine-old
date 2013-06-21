@@ -1,4 +1,6 @@
 package ;
+import com.hellespontus.engine.core.IWorld;
+import com.hellespontus.engine.d2.Entity2D;
 import com.hellespontus.engine.core.IUser;
 import com.hellespontus.engine.core.IWorld;
 import com.hellespontus.engine.controller.EngineControllerBase;
@@ -45,6 +47,13 @@ import com.hellespontus.engine.d2.Engine;
 
 class SubmarineEngineController extends EngineControllerBase{
 
+    private var tickCounter:Int;
+
+    override public function start():Void{
+        tickCounter = 0;
+        super.start();
+    }
+
     override private function connectToServer():Void {
         trace('connect to server...');
         fakeWorld();
@@ -56,7 +65,25 @@ class SubmarineEngineController extends EngineControllerBase{
         engine.user = u;
     
         var w:IWorld = new World(0);
+        
+        var i:Entity2D = cast(engine.createEntity(u), Entity2D);
+        i.x = 5;
+        i.y = 5;
+        i.vx = 0.06;
+        i.vy = 0.01;
+        i.ax = -0.00000001;
+        i.ay = -0.00000002;
+        w.add(i);        
+        
         engine.addState(w);
         
+    }
+
+    override private function tick(?delta:Int):Void {
+        var w:IWorld = engine.world();
+        if(tickCounter % 30 == 0)
+            trace(w);
+        engine.addState(w);
+        tickCounter++;
     }
 }

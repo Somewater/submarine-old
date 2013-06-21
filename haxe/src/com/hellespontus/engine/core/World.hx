@@ -75,4 +75,8 @@ class World implements IWorld{
     private function initClone():World {
         return new World(this.time());
     }
+
+    public function toString():String {
+        return 'W($entitiesById)';
+    }
 }

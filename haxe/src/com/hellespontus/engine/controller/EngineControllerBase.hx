@@ -32,9 +32,8 @@ class EngineControllerBase {
     }
 
     private function tick(?delta:Int):Void {
-        var t:Int = engine.time();
-        //trace("time delta=" + (t - lastTick));
-        engine.world();
-        lastTick = t;
+        // engine.world();
+        throw "Implement game logic";
+        return null;
     }
 }
