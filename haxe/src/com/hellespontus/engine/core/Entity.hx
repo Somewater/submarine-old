@@ -41,6 +41,6 @@ class Entity implements IEntity{
     }
 
     private function round(v:Float):Float {
-        return Std.int(v * 10000) * 0.0001;
+        return Std.int(v * 10000) / 10000;
     }    
 }
