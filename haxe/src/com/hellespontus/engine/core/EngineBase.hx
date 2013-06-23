@@ -115,7 +115,7 @@ class EngineBase implements IEngine{
     private function advanceHostWorld():IWorld {
         var w:IWorld = worlds[worlds.length - 1];
         if(w == null)
-            throw "Зrevious world not assigned";
+            throw "Previous world not assigned";
         else{
             var delta:Int = this.time() - w.time();
             w = w.clone();
