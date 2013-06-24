@@ -13,8 +13,13 @@ class EngineControllerBase {
         this.ticker = ticker;
         this.lastTick = 0;
     }
+
+    public function setup():Void{
+        throw "Override me";
+    }
     
     public function start():Void {
+        setup();
         connectToServer();
     }
 

@@ -5,6 +5,12 @@ class CommandBase implements ICommand{
     public var type:Int;
     public var id:Int;
 
-    public function new() {
+    public function new(type:Int) {
+        this.type = type;
+    }
+
+    public function execute(world:IWorld):IWorld {
+        throw "Implement execute method";
+        return null;
     }
 }

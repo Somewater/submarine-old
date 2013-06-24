@@ -20,10 +20,6 @@ class Entity implements IEntity{
 
     }
 
-    public function apply(command:ICommand):Void {
-
-    }
-
     public function clone():IEntity {
         var e = initClone();
         e.id = this.id;

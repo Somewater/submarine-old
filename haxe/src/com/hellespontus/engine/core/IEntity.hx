@@ -7,7 +7,5 @@ interface IEntity {
 
     function advance(delta:Int):Void;
 
-    function apply(command:ICommand):Void;
-
     function clone():IEntity;
 }

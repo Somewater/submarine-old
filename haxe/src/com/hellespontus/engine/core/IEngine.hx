@@ -23,4 +23,8 @@ interface IEngine {
 
     function time():Int;// synchronized with server
     function addState(world:IWorld):Void;
+
+    function registerCommand(type:Int, clazz:Class<ICommand>):Void;
+    function createCommand(type:Int, ?args:Array<Dynamic> = null):ICommand;
+    function applyCommand(command:ICommand, world:IWorld):IWorld;
 }

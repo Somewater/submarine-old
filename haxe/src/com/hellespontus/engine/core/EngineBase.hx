@@ -17,6 +17,9 @@ class EngineBase implements IEngine{
     private var entityIdCounter:Int;
     private var userIdCounter:Int;
     private var worlds:Array<IWorld>;
+    
+    private var commandsDictionary:IntMap<Class<ICommand>>;
+    private var commandIdCounter:Int;
 
     public function new() {
         entityListeners = new IntMap<List<TEntityCallback>>();
@@ -25,6 +28,8 @@ class EngineBase implements IEngine{
         entityIdCounter = 1;
         userIdCounter = 1;
         worlds = new Array<IWorld>();
+        commandsDictionary = new IntMap<Class<ICommand>>();
+        commandIdCounter = 0;
     }
 
     public function initialize(serverTime:Int):Void {
@@ -111,15 +116,40 @@ class EngineBase implements IEngine{
         else
             return interpolateWorld();
     }
+
+    public function registerCommand(type:Int, clazz:Class<ICommand>):Void {
+        commandsDictionary.set(type, clazz);
+    }
+
+    public function createCommand(type:Int, ?args:Array<Dynamic> = null):ICommand {
+        var clazz:Class<ICommand> = commandsDictionary.get(type);
+        if(clazz != null){
+            var command:ICommand = Type.createInstance(clazz, if(args != null) args else [type] );
+            return command;
+        }
+        return null;
+    }
     
+    public function applyCommand(command:ICommand, world:IWorld):IWorld {
+        command.time = this.time();
+        command.id = ++commandIdCounter;
+        command.time = this.time();
+        command.execute(world);
+        return world;
+    }
+
     private function advanceHostWorld():IWorld {
         var w:IWorld = worlds[worlds.length - 1];
         if(w == null)
             throw "Previous world not assigned";
         else{
             var delta:Int = this.time() - w.time();
-            w = w.clone();
-            w.advance(delta);
+            if(delta > 0){
+                w = w.clone();
+                w.advance(delta);
+            } else if(delta < 0){
+                throw "Can't move time in back";
+            }
         }
         return w;
     }

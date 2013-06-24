@@ -42,11 +42,6 @@ class World implements IWorld{
         return entitiesById.get(id) != null;
     }
 
-    public function apply(command:ICommand):Void {
-        for(e in entities)
-            e.apply(command);
-    }
-
     public function clone():IWorld {
         var m:World = initClone();
         for(e in entities)

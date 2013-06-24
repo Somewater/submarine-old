@@ -4,8 +4,6 @@ interface IWorld {
 
     function remove(item:IEntity):Bool;
 
-    function apply(command:ICommand):Void;
-
     function clone():IWorld;
 
     function time():Int;

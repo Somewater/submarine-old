@@ -1,4 +1,5 @@
 package ;
+import com.hellespontus.engine.d2.SelectTargetCommand;
 import com.hellespontus.engine.core.IWorld;
 import com.hellespontus.engine.d2.Entity2D;
 import com.hellespontus.engine.core.IUser;
@@ -56,11 +57,12 @@ class SubmarineEngineController extends EngineControllerBase{
 
     override private function connectToServer():Void {
         trace('connect to server...');
-        fakeWorld();
         onEngineInitialized();
     }
 
-    private function fakeWorld():Void {
+    override public function setup():Void {
+        engine.registerCommand(SelectTargetCommand.TYPE, SelectTargetCommand);
+    
         var u:IUser = engine.createUser();
         engine.user = u;
     
