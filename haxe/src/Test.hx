@@ -1,4 +1,10 @@
 package ;
+import com.hellespontus.engine.core.CommandBase;
+import haxe.io.BytesOutput;
+import haxe.io.BytesInput;
+import com.hellespontus.engine.core.ICommand;
+import com.hellespontus.engine.core.IServer;
+import com.hellespontus.engine.controller.ServerBase;
 import com.hellespontus.engine.d2.SelectTargetCommand;
 import com.hellespontus.engine.core.IWorld;
 import com.hellespontus.engine.d2.Entity2D;
@@ -16,6 +22,8 @@ import com.hellespontus.engine.d2.Engine;
 
     public static var engine:IEngine;
     public static var ticker:Ticker;
+    public static var server:Server;
+
 
     public function new() {
     }
@@ -33,7 +41,8 @@ import com.hellespontus.engine.d2.Engine;
         User;
         
         ticker = new Ticker();
-        new SubmarineEngineController(engine, ticker).start();
+        server = new Server(engine);
+        new SubmarineEngineController(engine, ticker, server).start();
     }
 
     private static var defaultTrace:Dynamic;
@@ -87,5 +96,58 @@ class SubmarineEngineController extends EngineControllerBase{
             trace(w);
         engine.addState(w);
         tickCounter++;
+    }
+}
+
+class Server extends ServerBase{
+
+    public function new(commandRegister:ICommandRegister){
+        super(new WorldTranslatorBytes(), new CommandTranslatorBytes(commandRegister));
+    }
+
+    override public function start(host:String, port:Int):Void {
+    }
+
+    override public function sendSync(world:IWorld):Void {
+    }
+
+    override public function sendCommand(command:ICommand, currentUser:IUser):Void {
+    }
+}
+
+class WorldTranslatorBytes implements IWorldTranslator{
+
+    public function new(){
+    }
+
+    public function encode(world:IWorld):Dynamic {
+        var bytes:BytesOutput = new BytesOutput();
+        return bytes;
+    }
+
+    public function decode(data:Dynamic):IWorld {
+        var bytes:BytesInput = cast(data, BytesInput);
+        var world:IWorld = new World(bytes.readInt32());
+        return world;
+    }
+}
+
+class CommandTranslatorBytes implements ICommandTranslator {
+
+    private var commandRegister:ICommandRegister;
+
+    public function new(commandRegister:ICommandRegister){
+        this.commandRegister = commandRegister;
+    }
+
+    public function encode(command:ICommand):Dynamic {
+        var bytes:BytesOutput = new BytesOutput();
+        return bytes;
+    }
+
+    public function decode(data:Dynamic):ICommand {
+        var bytes:BytesInput = cast(data, BytesInput);
+        var command:ICommand = commandRegister.createCommand(bytes.readInt8(), []);
+        return command;
     }
 }
