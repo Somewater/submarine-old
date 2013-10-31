@@ -20,16 +20,19 @@ class EngineBase implements IEngine{
     
     private var commandsDictionary:IntMap<Class<ICommand>>;
     private var commandIdCounter:Int;
+    public var deferredCommands:Array<ICommand>;
 
     public function new() {
         entityListeners = new IntMap<List<TEntityCallback>>();
         serverTimeDelta = 0;
-        startEngineTime = Date.now().getTime();
+        startEngineTime = 0;
+        startEngineTime = this.time();
         entityIdCounter = 1;
         userIdCounter = 1;
         worlds = new Array<IWorld>();
         commandsDictionary = new IntMap<Class<ICommand>>();
         commandIdCounter = 0;
+        deferredCommands = new Array<ICommand>();
     }
 
     public function initialize(serverTime:Int):Void {
@@ -134,8 +137,13 @@ class EngineBase implements IEngine{
         command.time = this.time();
         command.id = ++commandIdCounter;
         command.time = this.time();
-        command.execute(world);
+        addState(command.execute(world));
+        deferredCommands.push(command);
         return world;
+    }
+    
+    public function clearDeferredCommands():Void {
+        deferredCommands = new Array<ICommand>();
     }
 
     private function advanceHostWorld():IWorld {

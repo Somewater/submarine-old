@@ -40,13 +40,29 @@ class EngineControllerBase {
     public function onEngineInitialized():Void {
         var minimalRate:Int = Std.int(Math.min( Math.min(PHYSIC_TICK_RATE, SERVER_SYNC_RATE),
                                                 Math.min(CLIENT_SYNC_RATE, RENDER_RATE)));
-        //ticker.start();
-        //ticker.add(tick, 50, this);
-        var timer:Timer = new Timer(minimalRate);
-        timer.run = cast tick;
+        ticker.start(minimalRate);
+        ticker.add(onPhysicTick, PHYSIC_TICK_RATE);
+        ticker.add(onRenderTick, RENDER_RATE);
+        if(engine.isHost()){
+            ticker.add(onServerTick, SERVER_SYNC_RATE);
+        } else {
+            ticker.add(onClientTick, CLIENT_SYNC_RATE);
+        }
     }
 
-    private function tick(?delta:Int):Void {
+    private function onPhysicTick(msDelta:Int):Void {
+    
+    }
 
+    private function onRenderTick(msDelta:Int):Void {
+        
+    }
+
+    private function onServerTick(msDelta:Int):Void {
+            
+    }
+
+    private function onClientTick(msDelta:Int):Void {
+        
     }
 }

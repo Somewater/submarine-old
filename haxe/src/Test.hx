@@ -90,7 +90,7 @@ class SubmarineEngineController extends EngineControllerBase{
         
     }
 
-    override private function tick(?delta:Int):Void {
+    override private function onPhysicTick(msDelta:Int):Void {
         var w:IWorld = engine.world();
         if(tickCounter % 30 == 0)
             trace(w);

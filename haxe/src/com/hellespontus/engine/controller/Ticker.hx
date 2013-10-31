@@ -1,6 +1,6 @@
 package com.hellespontus.engine.controller;
+import haxe.Timer;
 import Std;
-import js.Browser;
 
 typedef TickerBucket = {
     callback: Dynamic, 
@@ -24,7 +24,7 @@ class Ticker {
         tickers = new Array<TickerBucket>();
     }
 
-    public function start():Void {
+    public function start(?minDeltaMs:Int):Void {
         #if js
             requestAnimationFrame =
             untyped window.requestAnimationFrame || window.webkitRequestAnimationFrame || 
@@ -32,18 +32,20 @@ class Ticker {
             || function(callback, element) {window.setTimeout(callback, 1000/60);};
             var cb: Dynamic = requestAnimationFrame;
             cb(globalTick);
+        #else
+            var timer:Timer = new Timer(minDeltaMs);
+            timer.run = cast globalTick;
         #end
     }
 
-    private function globalTick():Void {
+    public function globalTick():Void {
         var tickTime:Float = Date.now().getTime();
         var dt:Int = this.lastTickTime != 0 ? Std.int(tickTime - this.lastTickTime) : 0;
         var tickersClone:Array<TickerBucket> = this.tickers.copy();
         for(i in 0...tickersClone.length){
             var t:TickerBucket = tickersClone[i];
-            t.delay -= dt;
             t.waiting += dt;
-            if(t.delay <= 0){
+            if(t.delay <= 0 || (t.delay -= dt) <= 0){
                 var args = if(t.args != null) t.args else [t.waiting];
                 Reflect.callMethod(t.self, t.callback, args);
                 if(t.interval != 0){

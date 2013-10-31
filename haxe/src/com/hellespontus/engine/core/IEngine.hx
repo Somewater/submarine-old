@@ -29,4 +29,6 @@ interface ICommandRegister {
     function registerCommand(type:Int, clazz:Class<ICommand>):Void;
     function createCommand(type:Int, ?args:Array<Dynamic> = null):ICommand;
     function applyCommand(command:ICommand, world:IWorld):IWorld;
+    var deferredCommands:Array<ICommand>;
+    function clearDeferredCommands():Void;
 }
